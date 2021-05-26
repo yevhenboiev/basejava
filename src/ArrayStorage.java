@@ -8,7 +8,7 @@ public class ArrayStorage {
     int size;
 
     void clear() {
-        Arrays.fill(storage, 0, storage.length, null);
+        Arrays.fill(storage, 0, size, null);
     }
 
     void save(Resume r) {
@@ -16,13 +16,24 @@ public class ArrayStorage {
         size++;
     }
 
-    Resume get(String uuid) { return null; }
+    String get(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(uuid)) {
+                return storage[i].uuid;
+            }
+        }
+
+        return "Данного uuid не найдено!";
+    }
 
     void delete(String uuid) {
-        storage[Integer.parseInt(uuid)] = null;
-        for (int i = Integer.parseInt(uuid); i < storage.length-1; i++) {
-            storage[i - 1] = storage[i];
-            storage[i] = null;
+        for (int i = 0; i < size; i++) {
+            if(storage[i].uuid.equals(uuid)) {
+                storage[i] = null;
+                for(int j = i; j < size - 1; j++) {
+                    storage[j] = storage[j + 1];
+                }
+            }
         }
         size--;
     }
