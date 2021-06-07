@@ -44,6 +44,7 @@ public abstract class AbstractArrayStorage {//implements Storage {
         if (index < 0) {
             System.out.println("Резюме " + uuid + " не существует");
         } else {
+            sortDelete(index);
             size--;
         }
     }
