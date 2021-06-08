@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage {//implements Storage {
+public abstract class AbstractArrayStorage implements Storage {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -20,7 +20,7 @@ public abstract class AbstractArrayStorage {//implements Storage {
 
     public void update(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Резюме " + r.getUuid() + " не найдено");
         } else {
             storage[index] = r;
@@ -29,7 +29,7 @@ public abstract class AbstractArrayStorage {//implements Storage {
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index >= 0) {
+        if (index < 0) {
             System.out.println("Резюме " + r.getUuid() + " уже существует");
         } else if (size >= STORAGE_LIMIT) {
             System.out.println("Массив переполнен");
@@ -45,6 +45,7 @@ public abstract class AbstractArrayStorage {//implements Storage {
             System.out.println("Резюме " + uuid + " не существует");
         } else {
             deletedElement(index);
+            storage[size - 1] = null;
             size--;
         }
     }
@@ -59,7 +60,7 @@ public abstract class AbstractArrayStorage {//implements Storage {
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Резюме " + uuid + " не найдено");
             return null;
         }
