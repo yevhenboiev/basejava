@@ -50,14 +50,14 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void delete() throws Exception {
         storage.delete(r1.getUuid());
-        Resume [] array = storage.getAll();
+        Resume[] array = storage.getAll();
         assertEquals(2, array.length);
         assertNotEquals(array[0], r1);
     }
 
     @Test
     public void getAll() throws Exception {
-        Resume [] array = storage.getAll();
+        Resume[] array = storage.getAll();
         assertEquals(array[0], r1);
         assertEquals(array[1], r2);
         assertEquals(array[2], r3);
@@ -85,7 +85,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = StorageException.class)
     public void getOverflow() throws Exception {
-        for(int i = 0; i < 9999; i++) {
+        for (int i = 0; i < 9999; i++) {
             new Resume();
         }
     }
