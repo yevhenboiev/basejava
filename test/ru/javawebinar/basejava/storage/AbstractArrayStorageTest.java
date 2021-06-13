@@ -41,8 +41,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        Resume r4 = new Resume();
-        storage.update(r4);
+        storage.update(new Resume());
     }
 
     @Test
@@ -61,34 +60,33 @@ public abstract class AbstractArrayStorageTest {
     public void saveOverflow() {
         try {
             for (int i = 3; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-                Resume R_i = new Resume();
-                storage.save(R_i);
+                Resume r_i = new Resume();
+                storage.save(r_i);
             }
         } catch (StorageException exp) {
             fail("Переполнение произошло раньше времени");
         }
-        Resume R_10000 = new Resume();
-        storage.save(R_10000);
+        Resume r_10000 = new Resume();
+        storage.save(r_10000);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(r1.getUuid());
+        assertEquals(2, storage.size());
         assertNotEquals(r1, storage.get(r1.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.get("room");
+        storage.delete("uuid5");
     }
 
     @Test
     public void getAll() {
-        Resume[] array = {r1, r2, r3};
-        Resume[] allResume = storage.getAll();
-        assertEquals(array[0], allResume[0]);
-        assertEquals(array[1], allResume[1]);
-        assertEquals(array[2], allResume[2]);
+        Resume[] expectedResumes = {r1, r2, r3};
+        Resume[] actualResumes = storage.getAll();
+        assertArrayEquals(expectedResumes, actualResumes);
     }
 
     @Test
