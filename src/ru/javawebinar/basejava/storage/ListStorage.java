@@ -5,38 +5,45 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage {
+public class ListStorage extends AbstractStorage {
     protected static List<Resume> storage = new ArrayList<>();
 
-    public void save(Resume r) {
+    @Override
+    protected void doSave(Resume r, int index) {
         storage.add(r);
     }
 
-    public void deleted(String uuid) {
-        int index = getIndex(uuid);
+    @Override
+    protected void doDelete(int index) {
         storage.remove(index);
     }
 
-    public void clear() {
+    @Override
+    protected void clearElement() {
         storage.removeAll(storage);
     }
 
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
+    @Override
+    protected void doUpdate(Resume r, int index) {
         storage.set(index, r);
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
+    @Override
+    protected Resume doGet(int index) {
         return storage.get(index);
     }
 
-    public void getAll() {
-        for (Resume r: storage) {
-            System.out.println(r);
-        }
+    @Override
+    protected int getSize() {
+        return storage.size();
     }
 
+    @Override
+    protected Resume[] doGetAll() {
+        return storage.toArray(new Resume[0]);
+    }
+
+    @Override
     protected int getIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
             if (uuid.equals(storage.get(i).getUuid())) {
@@ -46,3 +53,4 @@ public class ListStorage {
         return -1;
     }
 }
+
