@@ -7,14 +7,12 @@ public class ArrayStorage extends AbstractArrayStorage {
     @Override
     protected void saveElement(Resume r, int index) {
         storage[size] = r;
-        size++;
     }
 
     @Override
     protected void deletedElement(int index) {
         storage[index] = storage[size - 1];
     }
-
 
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {

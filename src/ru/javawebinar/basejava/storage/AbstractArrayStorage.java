@@ -14,10 +14,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected void doSave(Resume r, int index) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
-        } else {
-            saveElement(r, index);
-            size++;
         }
+        saveElement(r, index);
+        size++;
     }
 
     protected void doDelete(int index) {
@@ -26,7 +25,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    protected void clearElement() {
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
@@ -39,11 +38,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return storage[index];
     }
 
-    protected int getSize() {
+    public int size() {
         return size;
     }
 
-    protected Resume[] doGetAll() {
+    public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
