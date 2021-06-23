@@ -52,8 +52,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object getIndex) {
-        return getIndex != null;
+    protected boolean isExist(Object index) {
+        return index != null;
     }
 }
 

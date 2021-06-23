@@ -7,35 +7,23 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void save(Resume r) {
-        Object index = getIndex(r.getUuid());
-        if (isExist(index)) {
-         throw new ExistStorageException(r.getUuid());
-        }
-        doSave(r, index);
+        Object getSearchKey = ExistSearchKey(r.getUuid());
+        doSave(r, getSearchKey);
     }
 
     public void delete(String uuid) {
-        Object index = getIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        }
-        doDelete(index);
+        Object getSearchKey = NotExistSearchKey(uuid);
+        doDelete(getSearchKey);
     }
 
     public void update(Resume r) {
-        Object index = getIndex(r.getUuid());
-        if (!isExist(index)) {
-            throw new NotExistStorageException(r.getUuid());
-        }
-        doUpdate(r, index);
+        Object getSearchKey = NotExistSearchKey(r.getUuid());
+        doUpdate(r, getSearchKey);
     }
 
     public Resume get(String uuid) {
-        Object index = getIndex(uuid);
-        if (!isExist(index)) {
-            throw new NotExistStorageException(uuid);
-        }
-        return doGet(index);
+        Object getSearchKey = NotExistSearchKey(uuid);
+        return doGet(getSearchKey);
     }
 
     protected abstract void doSave(Resume r, Object index);
@@ -48,5 +36,21 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getIndex(String uuid);
 
-    protected abstract boolean isExist(Object getIndex);
+    protected abstract boolean isExist(Object index);
+
+    protected Object NotExistSearchKey(String uuid) {
+        Object searchKey = getIndex(uuid);
+        if (!isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return searchKey;
+    }
+
+    protected Object ExistSearchKey(String uuid) {
+        Object searchKey = getIndex(uuid);
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
+        }
+        return searchKey;
+    }
 }
