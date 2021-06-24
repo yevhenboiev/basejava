@@ -11,16 +11,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected void doSave(Resume r, Object index) {
+    protected void doSave(Resume r, Object searchKey) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
-        saveElement(r, index);
+        saveElement(r, (Integer) searchKey);
         size++;
     }
 
-    protected void doDelete(Object index) {
-        deletedElement(index);
+    protected void doDelete(Object searchKey) {
+        deletedElement((Integer) searchKey);
         storage[size - 1] = null;
         size--;
     }
@@ -30,12 +30,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size = 0;
     }
 
-    protected void doUpdate(Resume r, Object index) {
-        storage[(int) index] = r;
+    protected void doUpdate(Resume r, Object searchKey) {
+        storage[(Integer) searchKey] = r;
     }
 
-    protected Resume doGet(Object index) {
-        return storage[(int) index];
+    protected Resume doGet(Object searchKey) {
+        return storage[(Integer) searchKey];
     }
 
     public int size() {
@@ -46,13 +46,13 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
-    protected abstract Integer getIndex(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 
-    protected abstract void saveElement(Resume r, Object index);
+    protected abstract void saveElement(Resume r, int searchKey);
 
-    protected abstract void deletedElement(Object index);
+    protected abstract void deletedElement(int searchKey);
 
-    protected boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean isExist(Object searchKey) {
+        return (Integer) searchKey >= 0;
     }
 }
