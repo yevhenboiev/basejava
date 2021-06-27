@@ -5,9 +5,9 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.*;
 
 public class MainCollection {
-    static Resume r1 = new Resume("UUID1");
-    static Resume r2 = new Resume("UUID2");
-    static Resume r3 = new Resume("UUID3");
+    static Resume r1 = new Resume("UUID1", "Pypi Igor");
+    static Resume r2 = new Resume("UUID2", "Pypok Igor");
+    static Resume r3 = new Resume("UUID3", "Pypkin Igor");
 
     public static void main(String[] args) {
         Collection<Resume> resume = new ArrayList<>();
