@@ -6,16 +6,18 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public abstract class AbstractStorageTest {
     protected final Storage storage;
-    private final Resume r1 = new Resume("uuid1");
-    private final Resume r2 = new Resume("uuid2");
-    private final Resume r3 = new Resume("uuid3");
+    private final Resume r1 = new Resume("uuid1", "Pypok Igor");
+    private final Resume r2 = new Resume("uuid2", "Lomak Oleg");
+    private final Resume r3 = new Resume("uuid3", "Roman Ytkin");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -43,12 +45,12 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume());
+        storage.update(new Resume("uuid5", "Dijon Valiev"));
     }
 
     @Test
     public void save() {
-        Resume r4 = new Resume("uuid4");
+        Resume r4 = new Resume("uuid4", "Dijon Valiev");
         storage.save(r4);
         assertEquals(r4, storage.get(r4.getUuid()));
     }
@@ -67,17 +69,19 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() {
-        storage.delete("uuid5");
+        storage.delete("Dummy");
     }
 
     @Test
     public void getAll() {
-        Resume[] expectedResumes = {r1, r2, r3};
-        Resume[] actualResumes = storage.getAll();
-        Arrays.sort(actualResumes);
-        assertEquals(expectedResumes[0], actualResumes[0]);
-        assertEquals(expectedResumes[1], actualResumes[1]);
-        assertEquals(expectedResumes[2], actualResumes[2]);
+        List<Resume> expectedResumes = new ArrayList<>();
+        expectedResumes.add(r1);
+        expectedResumes.add(r2);
+        expectedResumes.add(r3);
+        List<Resume> actualResumes = storage.getAllSorted();
+        Collections.sort(actualResumes);
+        assertEquals(expectedResumes, actualResumes);
+
     }
 
     @Test
