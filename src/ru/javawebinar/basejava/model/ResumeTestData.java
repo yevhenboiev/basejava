@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,47 +36,60 @@ public class ResumeTestData {
                 ", \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). " +
                 "Удаленное взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. " +
                 "Более 1000 выпускников.");
-        achievement.add("\nРеализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
+        achievement.add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами Wrike. " +
                 "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
-        achievement.add("\nНалаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
+        achievement.add("Налаживание процесса разработки и непрерывной интеграции ERP системы River BPM. " +
                 "Интеграция с 1С, Bonita BPM, CMIS, LDAP. Разработка приложения управления окружением на стеке: " +
                 "Scala/Play/Anorm/JQuery. Разработка SSO аутентификации и авторизации различных ERP модулей, " +
                 "интеграция CIFS/SMB java сервера");
-        achievement.add("\nРеализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, " +
+        achievement.add("Реализация c нуля Rich Internet Application приложения на стеке технологий JPA, Spring, " +
                 "Spring-MVC, GWT, ExtGWT (GXT), Commet, HTML5, Highstock для алгоритмического трейдинга.");
-        achievement.add("\nСоздание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов " +
+        achievement.add("Создание JavaEE фреймворка для отказоустойчивого взаимодействия слабо-связанных сервисов " +
                 "(SOA-base архитектура, JAX-WS, JMS, AS Glassfish). Сбор статистики сервисов и " +
                 "информации о состоянии через систему мониторинга Nagios. " +
                 "Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
-        achievement.add("\nРеализация протоколов по приему платежей всех основных платежных системы России " +
+        achievement.add("Реализация протоколов по приему платежей всех основных платежных системы России " +
                 "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         ListSection achievementSection = new ListSection(achievement);
         r1.setSection(SectionType.ACHIEVEMENT, achievementSection);
 
         List<String> qualification = new ArrayList<>();
         qualification.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
-        qualification.add("\nVersion control: Subversion, Git, Mercury, ClearCase, Perforce");
-        qualification.add("\nDB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle,");
-        qualification.add("\nMySQL, SQLite, MS SQL, HSQLDB");
-        qualification.add("\nLanguages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
-        qualification.add("\nXML/XSD/XSLT, SQL, C/C++, Unix shell scripts,");
-        qualification.add("\nJava Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring " +
+        qualification.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
+        qualification.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle,");
+        qualification.add("MySQL, SQLite, MS SQL, HSQLDB");
+        qualification.add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
+        qualification.add("XML/XSD/XSLT, SQL, C/C++, Unix shell scripts,");
+        qualification.add("Java Frameworks: Java 8 (Time API, Streams), Guava, Java Executor, MyBatis, Spring " +
                 "(MVC, Security, Data, Clouds, Boot), JPA (Hibernate, EclipseLink), Guice, GWT(SmartGWT, ExtGWT/GXT), " +
                 "Vaadin, Jasperreports, Apache Commons, Eclipse SWT, JUnit, Selenium (htmlelements).");
-        qualification.add("\nPython: Django.");
-        qualification.add("\nJavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js");
-        qualification.add("\nScala: SBT, Play2, Specs2, Anorm, Spray, Akka");
-        qualification.add("\nТехнологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, " +
+        qualification.add("Python: Django.");
+        qualification.add("JavaScript: jQuery, ExtJS, Bootstrap.js, underscore.js");
+        qualification.add("Scala: SBT, Play2, Specs2, Anorm, Spray, Akka");
+        qualification.add("Технологии: Servlet, JSP/JSTL, JAX-WS, REST, EJB, RMI, JMS, JavaMail, JAXB, StAX, SAX, " +
                 "DOM, XSLT, MDB, JMX, JDBC, JPA, JNDI, JAAS, SOAP, AJAX, Commet, HTML5, ESB, " +
                 "CMIS, BPMN2, LDAP, OAuth1, OAuth2, JWT.");
-        qualification.add("\nИнструменты: Maven + plugin development, Gradle, настройка Ngnix,");
-        qualification.add("\nадминистрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, " +
+        qualification.add("Инструменты: Maven + plugin development, Gradle, настройка Ngnix,");
+        qualification.add("администрирование Hudson/Jenkins, Ant + custom task, SoapUI, JPublisher, Flyway, " +
                 "Nagios, iReport, OpenCmis, Bonita, pgBouncer.");
-        qualification.add("\nОтличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, " +
+        qualification.add("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, " +
                 "архитектурных шаблонов, UML, функционального программирования");
-        qualification.add("\nРодной русский, английский \"upper intermediate\"");
+        qualification.add("Родной русский, английский \"upper intermediate\"");
         ListSection qualificationSection = new ListSection(qualification);
         r1.setSection(SectionType.QUALIFICATION, qualificationSection);
+
+        ExperienceSection experience = new ExperienceSection("Wrike",
+                LocalDate.parse("2013-01-20"), LocalDate.parse("2016-01-01"), "Старший разработчик (backend)",
+                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        r1.setSection(SectionType.EXPERIENCE, experience);
+
+        EducationSection education = new EducationSection("Coursera", LocalDate.parse("2020-10-01"),
+                        LocalDate.parse("2020-11-01"),
+                " \"Functional Programming Principles in Scala\" by Martin Odersky");
+        r1.setSection(SectionType.EDUCATION, education);
+
 
         System.out.println(r1.getFullName());
         System.out.println(SectionType.OBJECTIVE.getTitle());
@@ -86,7 +100,9 @@ public class ResumeTestData {
         System.out.println(r1.getSection(SectionType.ACHIEVEMENT));
         System.out.println(SectionType.QUALIFICATION.getTitle());
         System.out.println(r1.getSection(SectionType.QUALIFICATION));
-
-
+        System.out.println(SectionType.EXPERIENCE.getTitle());
+        System.out.println(r1.getSection(SectionType.EXPERIENCE));
+        System.out.println(SectionType.EDUCATION.getTitle());
+        System.out.println(r1.getSection(SectionType.EDUCATION));
     }
 }
