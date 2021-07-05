@@ -3,7 +3,7 @@ package ru.javawebinar.basejava.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class EducationSection extends DataType {
+public class EducationSection extends Organization {
 
     private final String nameCourse;
 

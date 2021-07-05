@@ -3,7 +3,7 @@ package ru.javawebinar.basejava.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class ExperienceSection extends DataType {
+public class ExperienceSection extends Organization {
 
     private final String position;
     private final String additionalInformation;
