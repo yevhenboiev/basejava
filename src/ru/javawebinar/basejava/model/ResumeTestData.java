@@ -79,13 +79,17 @@ public class ResumeTestData {
         r1.setSection(SectionType.EXPERIENCE, experience);
 
         EducationSection education = new EducationSection("Coursera", LocalDate.parse("2020-10-01"),
-                        LocalDate.parse("2020-11-01"),
+                LocalDate.parse("2020-11-01"),
                 " \"Functional Programming Principles in Scala\" by Martin Odersky");
         r1.setSection(SectionType.EDUCATION, education);
 
-
         System.out.println(r1.getFullName());
-        r1.getAllContacts();
-        r1.getAllSection();
+        for (ContactsType contacts : ContactsType.values()) {
+            System.out.println(contacts.getTitle() + " : " + r1.getContacts(contacts));
+        }
+        for (SectionType section : SectionType.values()) {
+            System.out.println(section.getTitle());
+            System.out.println(r1.getSection(section));
+        }
     }
 }
