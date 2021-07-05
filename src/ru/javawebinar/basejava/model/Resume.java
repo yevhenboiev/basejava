@@ -47,15 +47,17 @@ public class Resume implements Comparable<Resume> {
 
     public void getAllContacts() {
         for (Map.Entry<ContactsType, String> entry : contacts.entrySet()) {
-            Map.Entry contacts = entry;
-            System.out.println(contacts.getKey() + " " + contacts.getValue());
+            ContactsType key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key.getTitle() + " : " + value);
         }
     }
 
     public void getAllSection() {
         for (Map.Entry<SectionType, AbstractSection> entry : section.entrySet()) {
-            Map.Entry section = entry;
-            System.out.println(section.getKey() + "\n" + section.getValue());
+            SectionType key = entry.getKey();
+            AbstractSection value = entry.getValue();
+            System.out.println(key.getTitle() + "\n" + value);
         }
     }
 
