@@ -45,6 +45,20 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public void getAllContacts() {
+        for (Map.Entry<ContactsType, String> entry : contacts.entrySet()) {
+            Map.Entry contacts = entry;
+            System.out.println(contacts.getKey() + " " + contacts.getValue());
+        }
+    }
+
+    public void getAllSection() {
+        for (Map.Entry<SectionType, AbstractSection> entry : section.entrySet()) {
+            Map.Entry section = entry;
+            System.out.println(section.getKey() + "\n" + section.getValue());
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

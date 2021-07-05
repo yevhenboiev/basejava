@@ -8,20 +8,13 @@ public class ResumeTestData {
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1", "Григорий Кислин");
-        String phone_number = "+7(921) 855-0482";
-        r1.setContacts(ContactsType.PHONE_NUMBER, phone_number);
-        String skype = "grigory.kislin";
-        r1.setContacts(ContactsType.SKYPE, skype);
-        String mail = "gkislin@yandex.ru";
-        r1.setContacts(ContactsType.MAIL, mail);
-        String linkedIn = "Профиль LinkedIn";
-        r1.setContacts(ContactsType.LINKEDIN, linkedIn);
-        String gitHub = "Профиль GitHub";
-        r1.setContacts(ContactsType.GIT_HUB, gitHub);
-        String stackoverflow = "Профиль StackOverflow";
-        r1.setContacts(ContactsType.STACKOVERFLOW, stackoverflow);
-        String homePage = "Домашняя страница";
-        r1.setContacts(ContactsType.HOME_PAGE, homePage);
+        r1.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
+        r1.setContacts(ContactsType.SKYPE, "grigory.kislin");
+        r1.setContacts(ContactsType.MAIL, "gkislin@yandex.ru");
+        r1.setContacts(ContactsType.LINKEDIN, "Профиль LinkedIn");
+        r1.setContacts(ContactsType.GIT_HUB, "Профиль GitHub");
+        r1.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
+        r1.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
 
         TextSection objective = new TextSection("Ведущий стажировок и корпоративного обучения " +
                 "по Java Web и Enterprise технологиям");
@@ -92,17 +85,7 @@ public class ResumeTestData {
 
 
         System.out.println(r1.getFullName());
-        System.out.println(SectionType.OBJECTIVE.getTitle());
-        System.out.println(r1.getSection(SectionType.OBJECTIVE));
-        System.out.println(SectionType.PERSONAL.getTitle());
-        System.out.println(r1.getSection(SectionType.PERSONAL));
-        System.out.println(SectionType.ACHIEVEMENT.getTitle());
-        System.out.println(r1.getSection(SectionType.ACHIEVEMENT));
-        System.out.println(SectionType.QUALIFICATION.getTitle());
-        System.out.println(r1.getSection(SectionType.QUALIFICATION));
-        System.out.println(SectionType.EXPERIENCE.getTitle());
-        System.out.println(r1.getSection(SectionType.EXPERIENCE));
-        System.out.println(SectionType.EDUCATION.getTitle());
-        System.out.println(r1.getSection(SectionType.EDUCATION));
+        r1.getAllContacts();
+        r1.getAllSection();
     }
 }
