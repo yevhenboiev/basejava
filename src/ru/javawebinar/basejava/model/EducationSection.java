@@ -9,6 +9,7 @@ public class EducationSection extends Organization {
 
     public EducationSection(String organization, LocalDate startDate, LocalDate overDate, String nameCourse) {
         super(organization, startDate, overDate);
+        Objects.requireNonNull(nameCourse, "name course must not by null");
         this.nameCourse = nameCourse;
     }
 

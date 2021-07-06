@@ -10,6 +10,8 @@ public class ExperienceSection extends Organization {
 
     public ExperienceSection(String organization, LocalDate startDate, LocalDate overDate, String position, String additionalInformation) {
         super(organization, startDate, overDate);
+        Objects.requireNonNull(position, "position must not by null");
+        Objects.requireNonNull(additionalInformation, "additionalInformation must not by null");
         this.position = position;
         this.additionalInformation = additionalInformation;
     }

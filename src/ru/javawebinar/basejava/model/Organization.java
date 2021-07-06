@@ -11,6 +11,9 @@ public class Organization extends AbstractSection {
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/yyyy");
 
     public Organization(String organization, LocalDate startDate, LocalDate endDate) {
+        Objects.requireNonNull(organization, "organization must not by null");
+        Objects.requireNonNull(startDate, "startDate must not by null");
+        Objects.requireNonNull(endDate, "endDate must not by null");
         this.organization = organization;
         this.startDate = startDate;
         this.endDate = endDate;
