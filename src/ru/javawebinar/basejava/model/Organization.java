@@ -28,7 +28,7 @@ public class Organization {
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
         return homePage.equals(that.homePage) && startDate.equals(that.startDate) && endDate.equals(that.endDate)
-                && title.equals(that.title) && description.equals(that.description);
+                && title.equals(that.title) && Objects.equals(description, that.description);
     }
 
     @Override

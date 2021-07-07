@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +16,10 @@ public class ResumeTestData {
         r1.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
         r1.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
 
-        TextSection objective = new TextSection("Ведущий стажировок и корпоративного обучения " +
-                "по Java Web и Enterprise технологиям");
-        r1.setSection(SectionType.OBJECTIVE, objective);
-
-        TextSection personal = new TextSection("Аналитический склад ума, сильная логика, " +
-                "креативность, инициативность. Пурист кода и архитектуры.");
-        r1.setSection(SectionType.PERSONAL, personal);
+        r1.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
+                "по Java Web и Enterprise технологиям"));
+        r1.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
+                "креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievement = new ArrayList<>();
         achievement.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"" +
@@ -70,17 +68,23 @@ public class ResumeTestData {
         ListSection qualificationSection = new ListSection(qualification);
         r1.setSection(SectionType.QUALIFICATION, qualificationSection);
 
-//        ExperienceSection experience = new ExperienceSection("Wrike", null,
-//                LocalDate.parse("2013-01-20"), LocalDate.parse("2016-01-01"), "Старший разработчик (backend)",
-//                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-//                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-//                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-//        r1.setSection(SectionType.EXPERIENCE, experience);
-//
-//        EducationSection education = new EducationSection("Coursera", null, LocalDate.parse("2020-10-01"),
-//                LocalDate.parse("2020-11-01"),
-//                " \"Functional Programming Principles in Scala\" by Martin Odersky");
-//        r1.setSection(SectionType.EDUCATION, education);
+        List<Organization> experienceOrganization = new ArrayList<>();
+        Organization wrike = new Organization("Wrike", null, LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
+                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        experienceOrganization.add(wrike);
+        OrganizationSection experience = new OrganizationSection(experienceOrganization);
+        r1.setSection(SectionType.EXPERIENCE, experience);
+
+
+        List<Organization> educationOrganization = new ArrayList<>();
+        Organization coursera = new Organization("Coursera", null, LocalDate.parse("2020-10-01"),
+                LocalDate.parse("2020-11-01"),
+                " \"Functional Programming Principles in Scala\" by Martin Odersky", null);
+        educationOrganization.add(coursera);
+        OrganizationSection education = new OrganizationSection(educationOrganization);
+        r1.setSection(SectionType.EDUCATION, education);
 
         System.out.println(r1.getFullName());
         for (ContactsType contacts : ContactsType.values()) {
