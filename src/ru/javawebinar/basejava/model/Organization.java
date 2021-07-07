@@ -5,16 +5,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Organization extends AbstractSection {
-    private final String organization;
+    private final Link organization;
     private final LocalDate startDate;
     private final LocalDate endDate;
     private final DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/yyyy");
 
-    public Organization(String organization, LocalDate startDate, LocalDate endDate) {
-        Objects.requireNonNull(organization, "organization must not by null");
+    public Organization(String name, String url, LocalDate startDate, LocalDate endDate) {
         Objects.requireNonNull(startDate, "startDate must not by null");
         Objects.requireNonNull(endDate, "endDate must not by null");
-        this.organization = organization;
+        this.organization = new Link(name, url);
         this.startDate = startDate;
         this.endDate = endDate;
     }

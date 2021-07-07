@@ -71,14 +71,14 @@ public class ResumeTestData {
         ListSection qualificationSection = new ListSection(qualification);
         r1.setSection(SectionType.QUALIFICATION, qualificationSection);
 
-        ExperienceSection experience = new ExperienceSection("Wrike",
+        ExperienceSection experience = new ExperienceSection("Wrike", null,
                 LocalDate.parse("2013-01-20"), LocalDate.parse("2016-01-01"), "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         r1.setSection(SectionType.EXPERIENCE, experience);
 
-        EducationSection education = new EducationSection("Coursera", LocalDate.parse("2020-10-01"),
+        EducationSection education = new EducationSection("Coursera", null, LocalDate.parse("2020-10-01"),
                 LocalDate.parse("2020-11-01"),
                 " \"Functional Programming Principles in Scala\" by Martin Odersky");
         r1.setSection(SectionType.EDUCATION, education);

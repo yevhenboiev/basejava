@@ -7,8 +7,8 @@ public class EducationSection extends Organization {
 
     private final String nameCourse;
 
-    public EducationSection(String organization, LocalDate startDate, LocalDate overDate, String nameCourse) {
-        super(organization, startDate, overDate);
+    public EducationSection(String name, String url, LocalDate startDate, LocalDate overDate, String nameCourse) {
+        super(name, url, startDate, overDate);
         Objects.requireNonNull(nameCourse, "name course must not by null");
         this.nameCourse = nameCourse;
     }

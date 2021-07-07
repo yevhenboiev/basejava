@@ -8,8 +8,8 @@ public class ExperienceSection extends Organization {
     private final String position;
     private final String additionalInformation;
 
-    public ExperienceSection(String organization, LocalDate startDate, LocalDate overDate, String position, String additionalInformation) {
-        super(organization, startDate, overDate);
+    public ExperienceSection(String name, String url, LocalDate startDate, LocalDate overDate, String position, String additionalInformation) {
+        super(name, url, startDate, overDate);
         Objects.requireNonNull(position, "position must not by null");
         Objects.requireNonNull(additionalInformation, "additionalInformation must not by null");
         this.position = position;
