@@ -1,25 +1,15 @@
 package ru.javawebinar.basejava.model;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Organization {
     private final Link homePage;
+    private final List<TimeZoneOrganization> timeZone;
 
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String title;
-    private final String description;
-
-    public Organization(String name, String url, LocalDate startDate, LocalDate endDate, String title, String description) {
-        Objects.requireNonNull(startDate, "startDate must not be null");
-        Objects.requireNonNull(endDate, "endDate must not be null");
-        Objects.requireNonNull(title, "title must not be null");
+    public Organization(String name, String url, List<TimeZoneOrganization> timeZone) {
         this.homePage = new Link(name, url);
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.title = title;
-        this.description = description;
+        this.timeZone = timeZone;
     }
 
     @Override
@@ -27,23 +17,19 @@ public class Organization {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return homePage.equals(that.homePage) && startDate.equals(that.startDate) && endDate.equals(that.endDate)
-                && title.equals(that.title) && Objects.equals(description, that.description);
+        return homePage.equals(that.homePage) && timeZone.equals(that.timeZone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(homePage, startDate, endDate, title, description);
+        return Objects.hash(homePage, timeZone);
     }
 
     @Override
     public String toString() {
         return "Organization{" +
                 "homePage=" + homePage +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
+                ", timeZone=" + timeZone +
                 '}';
     }
 }
