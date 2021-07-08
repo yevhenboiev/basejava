@@ -5,6 +5,8 @@ import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.ResumeTestData;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,10 +16,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public abstract class AbstractStorageTest {
+    ResumeTestData resume = new ResumeTestData();
     protected final Storage storage;
-    private final Resume r1 = new Resume("uuid1", "Name 1");
-    private final Resume r2 = new Resume("uuid2", "Name 2");
-    private final Resume r3 = new Resume("uuid3", "Name 3");
+    private final Resume r1 = resume.setResume("uuid1", "Name 1");
+    private final Resume r2 = resume.setResume("uuid2", "Name 2");
+    private final Resume r3 = resume.setResume("uuid3", "Name 3");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

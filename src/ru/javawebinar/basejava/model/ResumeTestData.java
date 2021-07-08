@@ -6,19 +6,19 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1", "Григорий Кислин");
-        r1.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
-        r1.setContacts(ContactsType.SKYPE, "grigory.kislin");
-        r1.setContacts(ContactsType.MAIL, "gkislin@yandex.ru");
-        r1.setContacts(ContactsType.LINKEDIN, "Профиль LinkedIn");
-        r1.setContacts(ContactsType.GIT_HUB, "Профиль GitHub");
-        r1.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
-        r1.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
+    public Resume setResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+        resume.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.setContacts(ContactsType.SKYPE, "grigory.kislin");
+        resume.setContacts(ContactsType.MAIL, "gkislin@yandex.ru");
+        resume.setContacts(ContactsType.LINKEDIN, "Профиль LinkedIn");
+        resume.setContacts(ContactsType.GIT_HUB, "Профиль GitHub");
+        resume.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
+        resume.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
 
-        r1.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
+        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
                 "по Java Web и Enterprise технологиям"));
-        r1.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
+        resume.setSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
                 "креативность, инициативность. Пурист кода и архитектуры."));
 
         List<String> achievement = new ArrayList<>();
@@ -41,7 +41,7 @@ public class ResumeTestData {
         achievement.add("Реализация протоколов по приему платежей всех основных платежных системы России " +
                 "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
         ListSection achievementSection = new ListSection(achievement);
-        r1.setSection(SectionType.ACHIEVEMENT, achievementSection);
+        resume.setSection(SectionType.ACHIEVEMENT, achievementSection);
 
         List<String> qualification = new ArrayList<>();
         qualification.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -66,7 +66,7 @@ public class ResumeTestData {
                 "архитектурных шаблонов, UML, функционального программирования");
         qualification.add("Родной русский, английский \"upper intermediate\"");
         ListSection qualificationSection = new ListSection(qualification);
-        r1.setSection(SectionType.QUALIFICATION, qualificationSection);
+        resume.setSection(SectionType.QUALIFICATION, qualificationSection);
 
         List<Organization> experienceOrganization = new ArrayList<>();
         TimeZoneOrganization positionWrike = new TimeZoneOrganization(LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
@@ -83,7 +83,7 @@ public class ResumeTestData {
         Organization wrike = new Organization("Wrike", null, wrikeOrganization);
         experienceOrganization.add(wrike);
         OrganizationSection experience = new OrganizationSection(experienceOrganization);
-        r1.setSection(SectionType.EXPERIENCE, experience);
+        resume.setSection(SectionType.EXPERIENCE, experience);
 
 
         List<Organization> educationOrganization = new ArrayList<>();
@@ -95,15 +95,9 @@ public class ResumeTestData {
         Organization coursera = new Organization("Coursera", null, courseraOrganizatino);
         educationOrganization.add(coursera);
         OrganizationSection education = new OrganizationSection(educationOrganization);
-        r1.setSection(SectionType.EDUCATION, education);
+        resume.setSection(SectionType.EDUCATION, education);
 
-        System.out.println(r1.getFullName());
-        for (ContactsType contacts : ContactsType.values()) {
-            System.out.println(contacts.getTitle() + " : " + r1.getContacts(contacts));
-        }
-        for (SectionType section : SectionType.values()) {
-            System.out.println(section.getTitle());
-            System.out.println(r1.getSection(section));
-        }
+        return resume;
     }
 }
+
