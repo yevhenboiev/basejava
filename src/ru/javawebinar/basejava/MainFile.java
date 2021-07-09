@@ -5,20 +5,18 @@ import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) throws RuntimeException {
-//        File file = new File(".//.gitignore");
-//        try {
-//            System.out.println(file.getCanonicalPath());
-//        } catch (IOException e) {
-//            throw new RuntimeException("Error", e);
-//        }
-        File dir = new File("/home/java-developer/Документы/basejava/src/ru/javawebinar/basejava");
-        if (dir.isDirectory()) {
-            for (File files : Objects.requireNonNull(dir.listFiles())) {
-                if (files.isDirectory()) {
-                    System.out.println("It's directory: " + files.getName());
-                } else if (files.isFile()) {
-                    System.out.println("It's file: " + files.getName());
-                }
+        File dir = new File("./src/ru/javawebinar/basejava");
+        MainFile mainFile = new MainFile();
+        mainFile.recourseMethod(dir);
+    }
+
+    public void recourseMethod(File directory) {
+        for (File files : Objects.requireNonNull(directory.listFiles())) {
+            if (files.isDirectory()) {
+                System.out.println("It's directory: " + files.getName());
+                recourseMethod(files);
+            } else if (files.isFile()) {
+                System.out.println("It's file: " + files.getName());
             }
         }
     }
