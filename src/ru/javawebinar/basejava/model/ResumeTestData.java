@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ResumeTestData {
 
-    public Resume setResume(String uuid, String fullName) {
+    public static Resume fillResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
         resume.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
         resume.setContacts(ContactsType.SKYPE, "grigory.kislin");
@@ -69,15 +69,15 @@ public class ResumeTestData {
         resume.setSection(SectionType.QUALIFICATION, qualificationSection);
 
         List<Organization> experienceOrganization = new ArrayList<>();
-        TimeZoneOrganization positionWrike = new TimeZoneOrganization(LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
+        Position positionWrike = new Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        TimeZoneOrganization positionWrike1 = new TimeZoneOrganization(LocalDate.parse("2010-10-01"), LocalDate.now(), "Младший разработчик (backend)",
+        Position positionWrike1 = new Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Младший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        List<TimeZoneOrganization> wrikeOrganization = new ArrayList<>();
+        List<Position> wrikeOrganization = new ArrayList<>();
         wrikeOrganization.add(positionWrike);
         wrikeOrganization.add(positionWrike1);
         Organization wrike = new Organization("Wrike", null, wrikeOrganization);
@@ -87,8 +87,8 @@ public class ResumeTestData {
 
 
         List<Organization> educationOrganization = new ArrayList<>();
-        List<TimeZoneOrganization> courseraOrganizatino = new ArrayList<>();
-        TimeZoneOrganization positionCoursera = new TimeZoneOrganization(LocalDate.parse("2020-10-01"),
+        List<Position> courseraOrganizatino = new ArrayList<>();
+        Position positionCoursera = new Position(LocalDate.parse("2020-10-01"),
                 LocalDate.parse("2020-11-01"),
                 " \"Functional Programming Principles in Scala\" by Martin Odersky", null);
         courseraOrganizatino.add(positionCoursera);

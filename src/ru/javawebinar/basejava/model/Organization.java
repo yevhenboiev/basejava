@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Organization {
     private final Link homePage;
-    private final List<TimeZoneOrganization> timeZone;
+    private final List<Position> timeZone;
 
-    public Organization(String name, String url, List<TimeZoneOrganization> timeZone) {
+    public Organization(String name, String url, List<Position> timeZone) {
         this.homePage = new Link(name, url);
         this.timeZone = timeZone;
     }

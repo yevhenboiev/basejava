@@ -18,9 +18,9 @@ import static org.junit.Assert.assertNotEquals;
 public abstract class AbstractStorageTest {
     ResumeTestData resume = new ResumeTestData();
     protected final Storage storage;
-    private final Resume r1 = resume.setResume("uuid1", "Name 1");
-    private final Resume r2 = resume.setResume("uuid2", "Name 2");
-    private final Resume r3 = resume.setResume("uuid3", "Name 3");
+    private final Resume r1 = resume.fillResume("uuid1", "Name 1");
+    private final Resume r2 = resume.fillResume("uuid2", "Name 2");
+    private final Resume r3 = resume.fillResume("uuid3", "Name 3");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

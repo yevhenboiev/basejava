@@ -1,6 +1,7 @@
 package ru.javawebinar.basejava;
 
 import java.io.File;
+import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) throws RuntimeException {
@@ -12,18 +13,13 @@ public class MainFile {
 //        }
         File dir = new File("/home/java-developer/Документы/basejava/src/ru/javawebinar/basejava");
         if (dir.isDirectory()) {
-            for (File files : dir.listFiles()) {
+            for (File files : Objects.requireNonNull(dir.listFiles())) {
                 if (files.isDirectory()) {
-                    System.out.println(files.getName());
-                    for (File filesDirectory : files.listFiles()) {
-                        System.out.println("\t" + filesDirectory.getName());
-                    }
-                } else {
-                    System.out.println(files.getName());
+                    System.out.println("It's directory: " + files.getName());
+                } else if (files.isFile()) {
+                    System.out.println("It's file: " + files.getName());
                 }
             }
-        } else {
-            System.out.println(dir.getName());
         }
     }
 }

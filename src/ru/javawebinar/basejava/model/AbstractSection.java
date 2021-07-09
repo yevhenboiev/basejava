@@ -1,4 +1,4 @@
 package ru.javawebinar.basejava.model;
 
-abstract public class Section {
+abstract public class AbstractSection {
 }
