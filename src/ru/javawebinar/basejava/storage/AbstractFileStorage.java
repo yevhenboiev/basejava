@@ -80,7 +80,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> resume = new ArrayList<>();
-        for(File file : directory.listFiles()) {
+        for(File file : Objects.requireNonNull(directory.listFiles())) {
             doRead(file);
         }
         return resume;
