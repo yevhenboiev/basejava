@@ -7,7 +7,7 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.model.ResumeTestData;
 
-
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("/home/java-developer/Документы/basejava/storage");
+
     ResumeTestData resume = new ResumeTestData();
     protected final Storage storage;
     private final Resume r1 = resume.fillResume("uuid1", "Name 1");

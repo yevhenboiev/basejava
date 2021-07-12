@@ -69,30 +69,25 @@ public class ResumeTestData {
         resume.setSection(SectionType.QUALIFICATION, qualificationSection);
 
         List<Organization> experienceOrganization = new ArrayList<>();
-        Position positionWrike = new Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
+        Organization.Position positionWrike = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        Position positionWrike1 = new Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Младший разработчик (backend)",
+        Organization.Position positionWrike1 = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.now(), "Младший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                         "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        List<Position> wrikeOrganization = new ArrayList<>();
-        wrikeOrganization.add(positionWrike);
-        wrikeOrganization.add(positionWrike1);
-        Organization wrike = new Organization("Wrike", null, wrikeOrganization);
+        Organization wrike = new Organization("Wrike", null, positionWrike, positionWrike1);
         experienceOrganization.add(wrike);
         OrganizationSection experience = new OrganizationSection(experienceOrganization);
         resume.setSection(SectionType.EXPERIENCE, experience);
 
 
         List<Organization> educationOrganization = new ArrayList<>();
-        List<Position> courseraOrganizatino = new ArrayList<>();
-        Position positionCoursera = new Position(LocalDate.parse("2020-10-01"),
+        Organization.Position positionCoursera = new Organization.Position(LocalDate.parse("2020-10-01"),
                 LocalDate.parse("2020-11-01"),
                 " \"Functional Programming Principles in Scala\" by Martin Odersky", null);
-        courseraOrganizatino.add(positionCoursera);
-        Organization coursera = new Organization("Coursera", null, courseraOrganizatino);
+        Organization coursera = new Organization("Coursera", null, positionCoursera);
         educationOrganization.add(coursera);
         OrganizationSection education = new OrganizationSection(educationOrganization);
         resume.setSection(SectionType.EDUCATION, education);
