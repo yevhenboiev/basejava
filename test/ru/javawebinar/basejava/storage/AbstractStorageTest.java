@@ -16,15 +16,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public abstract class AbstractStorageTest {
-    protected static final String STORAGE_PATH = "/home/java-developer/Документы/basejava/storage";
-    protected static final File STORAGE_DIR = new File(STORAGE_PATH);
+    protected static final File STORAGE_DIR = new File("/home/java-developer/Документы/basejava/storage");
 
 
-    ResumeTestData resume = new ResumeTestData();
     protected final Storage storage;
-    private final Resume r1 = resume.fillResume("uuid1", "Name 1");
-    private final Resume r2 = resume.fillResume("uuid2", "Name 2");
-    private final Resume r3 = resume.fillResume("uuid3", "Name 3");
+    private final Resume r1 = ResumeTestData.fillResume("uuid1", "Name 1");
+    private final Resume r2 = ResumeTestData.fillResume("uuid2", "Name 2");
+    private final Resume r3 = ResumeTestData.fillResume("uuid3", "Name 3");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;

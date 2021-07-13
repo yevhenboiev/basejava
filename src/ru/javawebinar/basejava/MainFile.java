@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class MainFile {
     public static void main(String[] args) throws RuntimeException {
-        File dir = new File("./src/ru/javawebinar/basejava");
+        File dir = new File("./src");
         MainFile mainFile = new MainFile();
         mainFile.recourseMethod(dir, "");
     }
@@ -15,8 +15,8 @@ public class MainFile {
             if (files.isFile()) {
                 System.out.println(str + "File: " + files.getName());
             } else if (files.isDirectory()) {
-                System.out.println("Directory: " + files.getName());
-                recourseMethod(files, "    ");
+                System.out.println(str + "Directory: " + files.getName());
+                recourseMethod(files, str + "    ");
             }
         }
     }

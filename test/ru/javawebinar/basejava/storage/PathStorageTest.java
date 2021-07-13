@@ -5,6 +5,6 @@ import static org.junit.Assert.*;
 public class PathStorageTest extends AbstractStorageTest {
 
     public PathStorageTest() {
-        super(new PathStorage(STORAGE_PATH, new ObjectStreamStorage()));
+        super(new PathStorage(STORAGE_DIR.toString(), new ObjectStreamStorage()));
     }
 }
