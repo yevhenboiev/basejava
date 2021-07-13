@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.StreamStrategy;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,10 +12,10 @@ import java.util.Objects;
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
 
-    private final StreamStorage streamStorage;
+    private final StreamStrategy streamStorage;
 
 
-    protected FileStorage(File directory, StreamStorage streamStorage) {
+    protected FileStorage(File directory, StreamStrategy streamStorage) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -43,10 +44,8 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        for (File files : Objects.requireNonNull(directory.listFiles())) {
-            if (file.equals(files)) {
-                file.delete();
-            }
+        if(!file.delete()) {
+            throw new StorageException("Deleted error", file.getName());
         }
     }
 
@@ -75,8 +74,14 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
-            file.delete();
+        File[] files = directory.listFiles();
+        if(files == null) {
+            throw new StorageException("Clear directory error", null);
+        }
+        else {
+            for (File file : files) {
+                doDelete(file);
+            }
         }
     }
 
@@ -95,10 +100,10 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        String[] list = directory.list();
-        if (list == null) {
+        File[] file = directory.listFiles();
+        if (file == null) {
             throw new StorageException("Directory read Error", null);
         }
-        return list.length;
+        return file.length;
     }
 }

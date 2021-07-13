@@ -2,21 +2,23 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.strategy.StreamStrategy;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
-    private final StreamStorage streamStorage;
+    private final StreamStrategy streamStorage;
 
-    protected PathStorage(String dir, StreamStorage streamStorage) {
+    protected PathStorage(String dir, StreamStrategy streamStorage) {
         this.streamStorage = streamStorage;
         directory = Paths.get(dir);
         Objects.requireNonNull(dir, "directory must not be null");
@@ -27,7 +29,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Path getSearchKey(String uuid) {
-        return Paths.get(String.valueOf(directory), uuid);
+        return directory.resolve(uuid);
     }
 
     @Override
@@ -84,9 +86,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     public List<Resume> getAllSorted() {
         try {
-            List<Resume> resumes = new ArrayList<>();
-            Files.list(directory).forEach(path -> resumes.add(doGet(path)));
-            return resumes;
+            return Files.list(directory).map(this :: doGet).collect(Collectors.toList());
         } catch (IOException e) {
             throw new StorageException("Get all storage Error", null, e);
         }
@@ -95,8 +95,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     public int size() {
         try {
-            Stream<Path> files = Files.list(Paths.get(String.valueOf(directory)));
-            return (int) files.count();
+            return (int) Files.list(Paths.get(String.valueOf(directory))).count();
         } catch (IOException e) {
             throw new StorageException("Directory read error", null);
         }
