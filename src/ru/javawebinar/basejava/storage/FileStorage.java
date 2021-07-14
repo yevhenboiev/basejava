@@ -44,7 +44,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        if(!file.delete()) {
+        if (!file.delete()) {
             throw new StorageException("Deleted error", file.getName());
         }
     }
@@ -74,25 +74,15 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if(files == null) {
-            throw new StorageException("Clear directory error", null);
-        }
-        else {
-            for (File file : files) {
-                doDelete(file);
-            }
+        for (File file : getListFile()) {
+            doDelete(file);
         }
     }
 
     @Override
     public List<Resume> getAllSorted() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory read error", null);
-        }
         List<Resume> list = new ArrayList<>();
-        for (File file : files) {
+        for (File file : getListFile()) {
             list.add(doGet(file));
         }
         return list;
@@ -100,10 +90,14 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        File[] file = directory.listFiles();
-        if (file == null) {
-            throw new StorageException("Directory read Error", null);
+        return getListFile().length;
+    }
+
+    private File[] getListFile() {
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory error", null);
         }
-        return file.length;
+        return files;
     }
 }
