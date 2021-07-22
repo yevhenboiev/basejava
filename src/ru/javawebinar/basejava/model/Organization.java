@@ -35,6 +35,14 @@ public class Organization implements Serializable {
         this.positions = positions;
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,8 +114,8 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            Position that = (Position) o;
-            return startDate.equals(that.startDate) && endDate.equals(that.endDate) && title.equals(that.title) && Objects.equals(description, that.description);
+            Position position = (Position) o;
+            return startDate.equals(position.startDate) && endDate.equals(position.endDate) && title.equals(position.title) && Objects.equals(description, position.description);
         }
 
         @Override

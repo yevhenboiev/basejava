@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.storage.serializer;
 import ru.javawebinar.basejava.model.*;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +33,39 @@ public class DataStreamSerializer implements StreamSerializer {
                     case "ACHIEVEMENT":
                     case "QUALIFICATION":
                         dos.writeUTF(entry.getKey().name());
-                        ListSection achievement = (ListSection) entry.getValue();
-                        dos.writeInt(achievement.getContentList().size());
-                        for (String s : achievement.getContentList()) {
+                        ListSection listSection = (ListSection) entry.getValue();
+                        dos.writeInt(listSection.getContentList().size());
+                        for (String s : listSection.getContentList()) {
                             dos.writeUTF(s);
+                        }
+                        break;
+                    case "EXPERIENCE":
+                    case "EDUCATION":
+                        dos.writeUTF(entry.getKey().name());
+                        OrganizationSection organizationSection = (OrganizationSection) entry.getValue();
+                        List<Organization> organizations = organizationSection.getOrganizations();
+                        int sizeOrganizations = organizations.size();
+                        dos.writeInt(sizeOrganizations);
+                        for (Organization organization : organizations) {
+                            List<Organization.Position> positions = organization.getPositions();
+                            int sizePosition = positions.size();
+                            dos.writeInt(sizePosition);
+                            for (Organization.Position position : positions) {
+                                dos.writeUTF(position.getStartDate().toString());
+                                dos.writeUTF(position.getEndDate().toString());
+                                dos.writeUTF(position.getTitle());
+                                if (position.getDescription() != null) {
+                                    dos.writeUTF(position.getDescription());
+                                } else {
+                                    dos.writeUTF("null");
+                                }
+                            }
+                            dos.writeUTF(organization.getHomePage().getName());
+                            if (organization.getHomePage().getUrl() != null) {
+                                dos.writeUTF(organization.getHomePage().getUrl());
+                            } else {
+                                dos.writeUTF("null");
+                            }
                         }
                         break;
                 }
@@ -54,12 +84,13 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.setContacts(ContactsType.valueOf(dis.readUTF()), dis.readUTF());
             }
 
-            for (int i = 0; i < dis.readInt(); i++) {
+            int sizeSection = dis.readInt();
+            for (int i = 0; i < sizeSection; i++) {
                 String sectionName = dis.readUTF();
                 switch (sectionName) {
                     case "OBJECTIVE":
                     case "PERSONAL":
-                        TextSection personalSection = new TextSection(sectionName);
+                        TextSection personalSection = new TextSection(dis.readUTF());
                         resume.setSection(SectionType.valueOf(sectionName), personalSection);
                         break;
                     case "ACHIEVEMENT":
@@ -71,6 +102,38 @@ public class DataStreamSerializer implements StreamSerializer {
                         }
                         ListSection listSection = new ListSection(list);
                         resume.setSection(SectionType.valueOf(sectionName), listSection);
+                        break;
+                    case "EXPERIENCE":
+                    case "EDUCATION" :
+                        List<Organization> listOrganization = new ArrayList<>();
+                        List<Organization.Position> listOrganizationPosition = new ArrayList<>();
+                        int sizeOrganization = dis.readInt();
+                        int sizePosition = dis.readInt();
+                        for (int o = 0; o < sizeOrganization; o++) {
+                            for (int k = 0; k < sizePosition; k++) {
+                                LocalDate startDate = LocalDate.parse(dis.readUTF());
+                                LocalDate endData = LocalDate.parse(dis.readUTF());
+                                String title = dis.readUTF();
+                                String description = dis.readUTF();
+                                if (description.equals("null")) {
+                                    description = null;
+                                }
+                                Organization.Position position = new Organization.Position(
+                                        startDate, endData, title, description);
+                                listOrganizationPosition.add(position);
+                            }
+                            String name = dis.readUTF();
+                            String url = dis.readUTF();
+                            if (url.equals("null")) {
+                                url = null;
+                            }
+                            Link link = new Link(name, url);
+                            Organization organization = new Organization(link, listOrganizationPosition);
+                            listOrganization.add(organization);
+                        }
+                        OrganizationSection organizationSection = new OrganizationSection(listOrganization);
+                        resume.setSection(SectionType.valueOf(sectionName), organizationSection);
+                        break;
                 }
             }
             return resume;
