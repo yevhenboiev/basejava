@@ -54,18 +54,10 @@ public class DataStreamSerializer implements StreamSerializer {
                                 dos.writeUTF(position.getStartDate().toString());
                                 dos.writeUTF(position.getEndDate().toString());
                                 dos.writeUTF(position.getTitle());
-                                if (position.getDescription() != null) {
-                                    dos.writeUTF(position.getDescription());
-                                } else {
-                                    dos.writeUTF("null");
-                                }
+                                dos.writeUTF(position.getDescription() != null ? position.getDescription() : "null");
                             }
                             dos.writeUTF(organization.getHomePage().getName());
-                            if (organization.getHomePage().getUrl() != null) {
-                                dos.writeUTF(organization.getHomePage().getUrl());
-                            } else {
-                                dos.writeUTF("null");
-                            }
+                            dos.writeUTF(organization.getHomePage().getUrl() != null ? organization.getHomePage().getUrl() : "null");
                         }
                         break;
                 }
