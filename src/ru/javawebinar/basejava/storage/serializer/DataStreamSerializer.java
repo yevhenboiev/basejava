@@ -5,63 +5,51 @@ import ru.javawebinar.basejava.model.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 public class DataStreamSerializer implements StreamSerializer {
 
-    @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
             Map<ContactsType, String> contacts = r.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactsType, String> entry : contacts.entrySet()) {
-                dos.writeUTF(entry.getKey().name());
-                dos.writeUTF(entry.getValue());
-            }
+            writeWithException(dos, contacts.entrySet(), writer -> {
+                dos.writeUTF(writer.getKey().name());
+                dos.writeUTF(writer.getValue());
+            });
+
             Map<SectionType, AbstractSection> section = r.getSection();
-            dos.writeInt(section.size());
-            for (Map.Entry<SectionType, AbstractSection> entry : section.entrySet()) {
-                switch (entry.getKey()) {
+            writeWithException(dos, section.entrySet(), writer -> {
+                SectionType type = writer.getKey();
+                AbstractSection sections = writer.getValue();
+                dos.writeUTF(type.name());
+                switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        dos.writeUTF(entry.getKey().name());
-                        dos.writeUTF(((TextSection) entry.getValue()).getContent());
+                        dos.writeUTF(((TextSection) sections).getContent());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATION:
-                        dos.writeUTF(entry.getKey().name());
-                        ListSection listSection = (ListSection) entry.getValue();
-                        dos.writeInt(listSection.getContentList().size());
-                        for (String s : listSection.getContentList()) {
-                            dos.writeUTF(s);
-                        }
+                        writeWithException(dos, ((ListSection) sections).getContentList(), dos::writeUTF);
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        dos.writeUTF(entry.getKey().name());
-                        OrganizationSection organizationSection = (OrganizationSection) entry.getValue();
-                        List<Organization> organizations = organizationSection.getOrganizations();
-                        int sizeOrganizations = organizations.size();
-                        dos.writeInt(sizeOrganizations);
-                        for (Organization organization : organizations) {
-                            List<Organization.Position> positions = organization.getPositions();
-                            int sizePosition = positions.size();
-                            dos.writeInt(sizePosition);
-                            for (Organization.Position position : positions) {
+                        writeWithException(dos, ((OrganizationSection) sections).getOrganizations() , organization -> {
+                            dos.writeUTF(organization.getHomePage().getName());
+                            dos.writeUTF(organization.getHomePage().getUrl() != null ? organization.getHomePage().getUrl() : "null");
+                            writeWithException(dos, organization.getPositions(), position -> {
                                 dos.writeUTF(position.getStartDate().toString());
                                 dos.writeUTF(position.getEndDate().toString());
                                 dos.writeUTF(position.getTitle());
                                 dos.writeUTF(position.getDescription() != null ? position.getDescription() : "null");
-                            }
-                            dos.writeUTF(organization.getHomePage().getName());
-                            dos.writeUTF(organization.getHomePage().getUrl() != null ? organization.getHomePage().getUrl() : "null");
-                        }
+                            });
+                        });
                         break;
                 }
-            }
+            });
         }
     }
 
@@ -100,7 +88,14 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization> listOrganization = new ArrayList<>();
                         List<Organization.Position> listOrganizationPosition = new ArrayList<>();
                         int sizeOrganization = dis.readInt();
+                        String name = dis.readUTF();
+                        String url = dis.readUTF();
+                        if (url.equals("null")) {
+                            url = null;
+                        }
+                        Link link = new Link(name, url);
                         int sizePosition = dis.readInt();
+
                         for (int o = 0; o < sizeOrganization; o++) {
                             for (int k = 0; k < sizePosition; k++) {
                                 LocalDate startDate = LocalDate.parse(dis.readUTF());
@@ -114,12 +109,6 @@ public class DataStreamSerializer implements StreamSerializer {
                                         startDate, endData, title, description);
                                 listOrganizationPosition.add(position);
                             }
-                            String name = dis.readUTF();
-                            String url = dis.readUTF();
-                            if (url.equals("null")) {
-                                url = null;
-                            }
-                            Link link = new Link(name, url);
                             Organization organization = new Organization(link, listOrganizationPosition);
                             listOrganization.add(organization);
                         }
@@ -129,6 +118,18 @@ public class DataStreamSerializer implements StreamSerializer {
                 }
             }
             return resume;
+        }
+    }
+
+    @FunctionalInterface
+    interface DataWriter<T> {
+        void write(T t) throws IOException;
+    }
+
+    public <T> void writeWithException(DataOutputStream dos, Collection<T> collection, DataWriter<T> writer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T entry : collection) {
+            writer.write(entry);
         }
     }
 }
