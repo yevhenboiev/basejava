@@ -44,7 +44,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 dos.writeUTF(position.getStartDate().toString());
                                 dos.writeUTF(position.getEndDate().toString());
                                 dos.writeUTF(position.getTitle());
-                                dos.writeUTF(position.getDescription() != null ? position.getDescription() : "null");
+                                dos.writeUTF(position.getDescription());
                             });
                         });
                         break;
@@ -81,23 +81,14 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization> listOrganization = new ArrayList<>();
                         List<Organization.Position> listOrganizationPosition = new ArrayList<>();
                         readWithException(dis, () -> {
-                            String name = dis.readUTF();
-                            String url = dis.readUTF();
-                            Link link = new Link(name, url);
+                            Link link = new Link(dis.readUTF(), dis.readUTF());
                             readWithException(dis, () -> {
-                                    LocalDate startDate = LocalDate.parse(dis.readUTF());
-                                    LocalDate endData = LocalDate.parse(dis.readUTF());
-                                    String title = dis.readUTF();
-                                    String description = dis.readUTF();
-                                    if (description.equals("null")) {
-                                        description = null;
-                                    }
-                                    Organization.Position position = new Organization.Position(
-                                            startDate, endData, title, description);
-                                    listOrganizationPosition.add(position);
-                                });
-                                Organization organization = new Organization(link, listOrganizationPosition);
-                                listOrganization.add(organization);
+                                Organization.Position position = new Organization.Position(
+                                        LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF(), dis.readUTF());
+                                listOrganizationPosition.add(position);
+                            });
+                            Organization organization = new Organization(link, listOrganizationPosition);
+                            listOrganization.add(organization);
                         });
                         OrganizationSection organizationSection = new OrganizationSection(listOrganization);
                         resume.setSection(SectionType.valueOf(sectionName), organizationSection);
