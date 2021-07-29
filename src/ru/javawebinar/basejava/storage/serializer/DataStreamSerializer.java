@@ -25,6 +25,7 @@ public class DataStreamSerializer implements StreamSerializer {
             writeWithException(dos, section.entrySet(), writer -> {
                 SectionType type = writer.getKey();
                 AbstractSection sections = writer.getValue();
+
                 dos.writeUTF(type.name());
                 switch (type) {
                     case OBJECTIVE:
@@ -38,11 +39,12 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EXPERIENCE:
                     case EDUCATION:
                         writeWithException(dos, ((OrganizationSection) sections).getOrganizations(), organization -> {
-                            dos.writeUTF(organization.getHomePage().getName());
-                            dos.writeUTF(organization.getHomePage().getUrl());
+                            Link link = organization.getHomePage();
+                            dos.writeUTF(link.getName());
+                            dos.writeUTF(link.getUrl());
                             writeWithException(dos, organization.getPositions(), position -> {
-                                dos.writeUTF(position.getStartDate().toString());
-                                dos.writeUTF(position.getEndDate().toString());
+                                writeLocalData(dos, position.getStartDate());
+                                writeLocalData(dos, position.getEndDate());
                                 dos.writeUTF(position.getTitle());
                                 dos.writeUTF(position.getDescription());
                             });
@@ -76,12 +78,22 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EDUCATION:
                         resume.setSection(SectionType.valueOf(sectionName), new OrganizationSection(readListWithException(dis, () ->
                                 new Organization(new Link(dis.readUTF(), dis.readUTF()), readListWithException(dis, () ->
-                                new Organization.Position(LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF(), dis.readUTF()))))));
+                                new Organization.Position(readLocalDate(dis.readInt(), dis.readInt()),
+                                        readLocalDate(dis.readInt(), dis.readInt()),dis.readUTF(), dis.readUTF()))))));
                         break;
                 }
             });
             return resume;
         }
+    }
+
+    private void writeLocalData(DataOutputStream dos, LocalDate data) throws IOException {
+        dos.writeInt(data.getYear());
+        dos.writeInt(data.getMonthValue());
+    }
+
+    private LocalDate readLocalDate(int year, int monthValue) {
+        return LocalDate.of(year, monthValue, 1);
     }
 
     @FunctionalInterface
