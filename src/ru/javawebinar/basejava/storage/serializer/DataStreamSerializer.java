@@ -66,32 +66,17 @@ public class DataStreamSerializer implements StreamSerializer {
                 switch (SectionType.valueOf(sectionName)) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        TextSection personalSection = new TextSection(dis.readUTF());
-                        resume.setSection(SectionType.valueOf(sectionName), personalSection);
+                        resume.setSection(SectionType.valueOf(sectionName), new TextSection(dis.readUTF()));
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATION:
-                        List<String> list = new ArrayList<>();
-                        readWithException(dis, () -> list.add(dis.readUTF()));
-                        ListSection listSection = new ListSection(list);
-                        resume.setSection(SectionType.valueOf(sectionName), listSection);
+                        resume.setSection(SectionType.valueOf(sectionName), new ListSection(readListWithException(dis, dis::readUTF)));
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        List<Organization> listOrganization = new ArrayList<>();
-                        List<Organization.Position> listOrganizationPosition = new ArrayList<>();
-                        readWithException(dis, () -> {
-                            Link link = new Link(dis.readUTF(), dis.readUTF());
-                            readWithException(dis, () -> {
-                                Organization.Position position = new Organization.Position(
-                                        LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF(), dis.readUTF());
-                                listOrganizationPosition.add(position);
-                            });
-                            Organization organization = new Organization(link, listOrganizationPosition);
-                            listOrganization.add(organization);
-                        });
-                        OrganizationSection organizationSection = new OrganizationSection(listOrganization);
-                        resume.setSection(SectionType.valueOf(sectionName), organizationSection);
+                        resume.setSection(SectionType.valueOf(sectionName), new OrganizationSection(readListWithException(dis, () ->
+                                new Organization(new Link(dis.readUTF(), dis.readUTF()), readListWithException(dis, () ->
+                                new Organization.Position(LocalDate.parse(dis.readUTF()), LocalDate.parse(dis.readUTF()), dis.readUTF(), dis.readUTF()))))));
                         break;
                 }
             });
@@ -104,7 +89,7 @@ public class DataStreamSerializer implements StreamSerializer {
         void write(T t) throws IOException;
     }
 
-    public <T> void writeWithException(DataOutputStream dos, Collection<T> collection, DataWriter<T> writer) throws IOException {
+    private <T> void writeWithException(DataOutputStream dos, Collection<T> collection, DataWriter<T> writer) throws IOException {
         dos.writeInt(collection.size());
         for (T entry : collection) {
             writer.write(entry);
@@ -116,11 +101,25 @@ public class DataStreamSerializer implements StreamSerializer {
         void read() throws IOException;
     }
 
-    public void readWithException(DataInputStream dis, DataReader reader) throws IOException {
+    private void readWithException(DataInputStream dis, DataReader reader) throws IOException {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             reader.read();
         }
+    }
+
+    @FunctionalInterface
+    interface ListReader<T> {
+        T readList() throws IOException;
+    }
+
+    private <T> List<T> readListWithException(DataInputStream dis, ListReader<T> list) throws IOException{
+        List<T> readerList = new ArrayList<>();
+        int size = dis.readInt();
+        for(int i = 0; i < size; i ++) {
+            readerList.add(list.readList());
+        }
+        return readerList;
     }
 }
 
