@@ -2,30 +2,28 @@ package ru.javawebinar.basejava;
 
 public class Deadlock {
     public static void main(String[] args) {
+        Deadlock lock = new Deadlock();
         Object x = new Object();
         Object y = new Object();
+        lock.createDeadlock(x, y).start();
+        lock.createDeadlock(y, x).start();
 
-        new Thread(() -> {
-            synchronized (x) {
-                System.out.println(Thread.currentThread().getName() + " Мы залочились по объекту Х");
+    }
 
-                System.out.println(Thread.currentThread().getName() + " Пробуем залочиться по объекту Y");
-                synchronized (y) {
-                    System.out.println(Thread.currentThread().getName() + " Мы залочились по обькту Y");
-                }
-            }
-        }).start();
-
-        new Thread(() -> {
+    public Thread createDeadlock(Object x, Object y) {
+        return new Thread(() -> {
             synchronized (y) {
-                System.out.println(Thread.currentThread().getName() + " Мы залочились по объекту Y");
-
-                System.out.println(Thread.currentThread().getName() + " Пробуем залочиться по объекту X");
+                System.out.println(Thread.currentThread().getName() + " Мы залочились по объекту");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + " Пробуем залочиться по другому объекту");
                 synchronized (x) {
-                    System.out.println(Thread.currentThread().getName() + " Мы залочились по обькту X");
+                    System.out.println(Thread.currentThread().getName() + " Мы залочились по обькту");
                 }
             }
-        }).start();
-
+        });
     }
 }
