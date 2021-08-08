@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class MainStream {
 
     public static void main(String[] args) {
-        int[] number = {9, 8};
+        int[] number = {1, 2, 1};
         MainStream ms = new MainStream();
         System.out.println("Stream : " + ms.minValue(number));
         System.out.println("Non Stream : " + ms.minValueNoStream(number));
@@ -57,10 +57,10 @@ public class MainStream {
     }
 
     private List<Integer> oddOrEven(List<Integer> integers) {
-        final int sum = integers.stream().mapToInt(Integer::intValue).sum();
+        final int sumItem = integers.stream().mapToInt(Integer::intValue).sum() % 2;
         return integers
                 .stream()
-                .filter(sum % 2 != 0 ? n -> n % 2 == 0 : n -> n % 2 != 0)
+                .filter(item -> item % 2 != sumItem)
                 .collect(Collectors.toList());
     }
 
