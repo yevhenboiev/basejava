@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -19,10 +20,16 @@ import static org.junit.Assert.assertNotEquals;
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
-    protected final Storage storage;
-    private final Resume r1 = ResumeTestData.fillResume("uuid1", "Name 1");
-    private final Resume r2 = ResumeTestData.fillResume("uuid2", "Name 2");
-    private final Resume r3 = ResumeTestData.fillResume("uuid3", "Name 3");
+    protected Storage storage;
+
+    private final String UUID_1 = UUID.randomUUID().toString();
+    private final String UUID_2 = UUID.randomUUID().toString();
+    private final String UUID_3 = UUID.randomUUID().toString();
+    private final String UUID_4 = UUID.randomUUID().toString();
+
+    private final Resume r1 = ResumeTestData.fillResume(UUID_1, "Name 1");
+    private final Resume r2 = ResumeTestData.fillResume(UUID_2, "Name 2");
+    private final Resume r3 = ResumeTestData.fillResume(UUID_3, "Name 3");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -55,7 +62,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        Resume r4 = new Resume("uuid4", "Name 4");
+        Resume r4 = new Resume(UUID_4, "Name 4");
         storage.save(r4);
         assertEquals(r4, storage.get(r4.getUuid()));
     }

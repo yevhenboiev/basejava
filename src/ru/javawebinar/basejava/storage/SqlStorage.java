@@ -32,7 +32,7 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name=? WHERE uuid=?")) {
             ps.setString(1, r.getFullName());
             ps.setString(2, r.getUuid());
-            ps.execute();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new NotExistStorageException(r.getUuid());
         }
@@ -44,7 +44,7 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = conn.prepareStatement("INSERT INTO resume(uuid, full_name) VALUES (?, ?)")) {
             ps.setString(1, r.getUuid());
             ps.setString(2, r.getFullName());
-            ps.execute();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new StorageException(e);
         }
@@ -70,7 +70,7 @@ public class SqlStorage implements Storage {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement("DELETE FROM resume WHERE uuid = ?")) {
             ps.setString(1, uuid);
-            ps.execute();
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new NotExistStorageException(uuid);
         }
