@@ -79,13 +79,13 @@ public class SqlStorage implements Storage {
     @Override
     public List<Resume> getAllSorted() {
         try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume")) {
-            List<Resume> allResume = new ArrayList<>();
+             PreparedStatement ps = conn.prepareStatement("SELECT * FROM resume r ORDER BY full_name,uuid")) {
             ResultSet rs = ps.executeQuery();
+            List<Resume> resumes = new ArrayList<>();
             while (rs.next()) {
-                allResume.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
+                resumes.add(new Resume(rs.getString("uuid"), rs.getString("full_name")));
             }
-            return allResume;
+            return resumes;
         } catch (SQLException e) {
             throw new StorageException(e);
         }
