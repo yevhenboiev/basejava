@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.Config;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 import sql.SqlHelper;
@@ -17,6 +18,10 @@ public class SqlStorage implements Storage {
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
+    }
+
+    public SqlStorage(Config cfg) {
+        this(cfg.getDbUrl(), cfg.getDbUser(), cfg.getDbPassword());
     }
 
     @Override
