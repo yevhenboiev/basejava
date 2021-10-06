@@ -62,7 +62,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() {
-        Resume r4 = new Resume(UUID_4, "Name 4");
+        Resume r4 = ResumeTestData.fillResume(UUID_4, "Name 4");
         storage.save(r4);
         assertEquals(r4, storage.get(r4.getUuid()));
     }

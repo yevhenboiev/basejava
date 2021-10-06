@@ -4,13 +4,13 @@ public class ResumeTestData {
 
     public static Resume fillResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-//        resume.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
-//        resume.setContacts(ContactsType.SKYPE, "grigory.kislin");
-//        resume.setContacts(ContactsType.MAIL, "gkislin@yandex.ru");
-//        resume.setContacts(ContactsType.LINKEDIN, "Профиль LinkedIn");
-//        resume.setContacts(ContactsType.GIT_HUB, "Профиль GitHub");
-//        resume.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
-//        resume.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
+        resume.setContacts(ContactsType.PHONE_NUMBER, "+7(921) 855-0482");
+        resume.setContacts(ContactsType.SKYPE, "grigory.kislin");
+        resume.setContacts(ContactsType.MAIL, "gkislin@yandex.ru");
+        resume.setContacts(ContactsType.LINKEDIN, "Профиль LinkedIn");
+        resume.setContacts(ContactsType.GIT_HUB, "Профиль GitHub");
+        resume.setContacts(ContactsType.STACKOVERFLOW, "Профиль StackOverflow");
+        resume.setContacts(ContactsType.HOME_PAGE, "Домашняя страница");
 //
 //        resume.setSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
 //                "по Java Web и Enterprise технологиям"));
