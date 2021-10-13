@@ -34,8 +34,8 @@ public class SqlStorage implements Storage {
                     throw new NotExistStorageException(r.getUuid());
                 }
             }
-            deleteContact(r, conn);
-            insertContact(r, conn);
+            deleteContacts(r, conn);
+            insertContacts(r, conn);
             return null;
         });
     }
@@ -49,7 +49,7 @@ public class SqlStorage implements Storage {
                 ps.setString(2, r.getFullName());
                 ps.execute();
             }
-            insertContact(r, conn);
+            insertContacts(r, conn);
             return null;
         });
     }
@@ -119,14 +119,14 @@ public class SqlStorage implements Storage {
         });
     }
 
-    private void deleteContact(Resume r, Connection conn) throws SQLException {
+    private void deleteContacts(Resume r, Connection conn) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("DELETE FROM contact c WHERE resume_uuid = ?")) {
             ps.setString(1, r.getUuid());
             ps.execute();
         }
     }
 
-    private void insertContact(Resume r, Connection conn) throws SQLException {
+    private void insertContacts(Resume r, Connection conn) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement("INSERT INTO contact (resume_uuid, type, value) VALUES (?, ?, ?)")) {
             for (Map.Entry<ContactsType, String> entry : r.getContacts().entrySet()) {
                 ps.setString(1, r.getUuid());
