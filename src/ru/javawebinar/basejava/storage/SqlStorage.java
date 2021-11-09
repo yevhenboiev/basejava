@@ -6,7 +6,10 @@ import ru.javawebinar.basejava.model.Resume;
 import sql.SqlHelper;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class SqlStorage implements Storage {
@@ -91,25 +94,49 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return sqlHelper.execute("   " +
-                "   SELECT * FROM resume r " +
-                "LEFT JOIN contact c " +
-                "       ON r.uuid = c.resume_uuid " +
-                "    ORDER BY full_name, uuid", ps -> {
+//        return sqlHelper.execute("   " +
+//                "   SELECT * FROM resume r " +
+//                "LEFT JOIN contact c " +
+//                "       ON r.uuid = c.resume_uuid " +
+//                "    ORDER BY full_name, uuid", ps -> {
+//            ResultSet rs = ps.executeQuery();
+//            Map<String, Resume> resumes = new LinkedHashMap<>();
+//            while (rs.next()) {
+//                String uuid = rs.getString("uuid");
+//                Resume resume = resumes.get(uuid);
+//                if (resume == null) {
+//                    resume = new Resume(uuid, rs.getString("full_name"));
+//                    resumes.put(uuid, resume);
+//                }
+//                addContact(rs, resume);
+//            }
+//            return new ArrayList<>(resumes.values());
+//        });
+        Map<String, Resume> resumes = new LinkedHashMap<>();
+        sqlHelper.execute("SELECT * FROM resume" +
+                                  " ORDER BY full_name, uuid", ps -> {
             ResultSet rs = ps.executeQuery();
-            Map<String, Resume> resumes = new LinkedHashMap<>();
             while (rs.next()) {
                 String uuid = rs.getString("uuid");
                 Resume resume = resumes.get(uuid);
-                if (resume == null) {
+                if(resume == null) {
                     resume = new Resume(uuid, rs.getString("full_name"));
                     resumes.put(uuid, resume);
                 }
-                addContact(rs, resume);
             }
-            return new ArrayList<>(resumes.values());
+            return null;
         });
+        sqlHelper.execute("SELECT * FROM contact", ps -> {
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                String uuid = rs.getString("resume_uuid");
+                resumes.get(uuid).setContacts(ContactsType.valueOf(rs.getString("type")), rs.getString("value"));
+            }
+           return null;
+        });
+        return new ArrayList<>(resumes.values());
     }
+
 
     @Override
     public int size() {
