@@ -1,7 +1,9 @@
 package ru.javawebinar.basejava.web;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ResumeServlet extends HttpServlet {
@@ -10,8 +12,7 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF8");
         response.setCharacterEncoding("UTF8");
         response.setContentType("text/html; charset=UTF8");
-        String name = request.getParameter("name");
-        response.getWriter().write(name == null ? "Hello Resumes!" : "Hello " + name + '!');
+        request.getRequestDispatcher("./tableAllResumes.html").include(request, response);
     }
 
     @Override
