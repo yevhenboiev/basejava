@@ -16,10 +16,10 @@ public class SqlStorage implements Storage {
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         try {
             Class.forName("org.postgresql.Driver");
-            sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Not found Postgres Driver", e);
         }
+        sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
     @Override
@@ -99,8 +99,8 @@ public class SqlStorage implements Storage {
 
     @Override
     public List<Resume> getAllSorted() {
-        Map<String, Resume> resumes = new LinkedHashMap<>();
         return sqlHelper.transactionExecute(conn -> {
+            Map<String, Resume> resumes = new LinkedHashMap<>();
             try (PreparedStatement ps = conn.prepareStatement("" +
                     "   SELECT * FROM resume" +
                     " ORDER BY full_name, uuid")) {
@@ -177,12 +177,8 @@ public class SqlStorage implements Storage {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATION:
-                        StringBuilder sb = new StringBuilder();
                         List<String> list = ((ListSection) entry.getValue()).getContentList();
-                        for (String line : list) {
-                            sb.append(line).append("\n");
-                        }
-                        ps.setString(3, sb.toString());
+                        ps.setString(3, String.join("\n", list));
                 }
                 ps.addBatch();
             }
