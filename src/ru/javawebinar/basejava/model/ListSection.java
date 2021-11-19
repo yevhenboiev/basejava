@@ -40,6 +40,6 @@ public class ListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "\t" + contentList.toString();
+        return String.join("\n", contentList);
     }
 }

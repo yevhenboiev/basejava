@@ -1,7 +1,7 @@
 package ru.javawebinar.basejava.web;
 
 import ru.javawebinar.basejava.Config;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.storage.Storage;
 
 import javax.servlet.ServletConfig;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ResumeServlet extends HttpServlet {
 
@@ -30,19 +31,23 @@ public class ResumeServlet extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/jsp/list.jsp").forward(request, response);
             return;
         }
-        Resume r;
+        Resume resume;
         switch (action) {
+            case "save":
+                resume = new Resume();
+                break;
             case "delete":
                 storage.delete(uuid);
                 response.sendRedirect("resume");
+                return;
             case "view":
             case "edit":
-                r = storage.get(uuid);
+                resume = storage.get(uuid);
                 break;
             default:
                 throw new IllegalArgumentException("Action " + action + " is illegal");
         }
-        request.setAttribute("resume", r);
+        request.setAttribute("resume", resume);
         request.getRequestDispatcher(
                 ("view".equals(action) ? "WEB-INF/jsp/view.jsp" : "WEB-INF/jsp/edit.jsp")
         ).forward(request, response);
@@ -51,7 +56,54 @@ public class ResumeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String uuid = request.getParameter("uuid");
+        String fullName = request.getParameter("fullName");
+        Resume resume = uuid.isEmpty()? new Resume() : storage.get(uuid);
+        saveContact(request, resume);
+        saveSection(request, resume);
+        if (fullName.isEmpty()) {
+            request.setAttribute("resume", resume);
+            request.getRequestDispatcher("WEB-INF/jsp/edit.jsp").forward(request, response);
+        }
+        resume.setFullName(fullName);
+        if (uuid.isEmpty()) {
+            storage.save(resume);
+        } else {
+            storage.update(resume);
+        }
+        response.sendRedirect("resume");
+    }
 
+    private void saveContact(HttpServletRequest request, Resume resume) {
+        for (ContactsType type : ContactsType.values()) {
+            String value = request.getParameter(type.name());
+            if (value != null && value.trim().length() != 0) {
+                resume.setContacts(type, value);
+            } else {
+                resume.getContacts().remove(type);
+            }
+        }
+    }
+
+    private void saveSection(HttpServletRequest request, Resume resume) {
+        for (SectionType type : SectionType.values()) {
+            String value = request.getParameter(type.name());
+            if (value != null && value.trim().length() != 0) {
+                switch (type) {
+                    case OBJECTIVE:
+                    case PERSONAL:
+                        resume.setSection(type, new TextSection(value));
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATION:
+                        resume.setSection(type, new ListSection(Arrays.asList(value.split("\n"))));
+                        break;
+                }
+            } else {
+                resume.getSection().remove(type);
+            }
+        }
     }
 
 

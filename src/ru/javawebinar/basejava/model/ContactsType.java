@@ -6,8 +6,8 @@ public enum ContactsType {
     SKYPE("Skype"),
     MAIL("Почта"),
     LINKEDIN("Профиль LinkedIn"),
-    GIT_HUB("Профиль Git Hub"),
-    STACKOVERFLOW("Профиль StackOverflow"),
+    GIT_HUB("Профиль GitHub"),
+    STACKOVERFLOW("Профиль Stackoverflow"),
     HOME_PAGE("Домашняя страница");
 
     private final String title;
@@ -19,4 +19,5 @@ public enum ContactsType {
     public String getTitle() {
         return title;
     }
+
 }
