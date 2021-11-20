@@ -1,5 +1,6 @@
 <%@ page import="ru.javawebinar.basejava.model.ContactsType" %>
 <%@ page import="ru.javawebinar.basejava.model.SectionType" %>
+<%@ page import="ru.javawebinar.basejava.util.HtmlHelper" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -10,44 +11,50 @@
     <title>Resume ${resume.fullName}</title>
 </head>
 <body>
-<jsp:include page="fragments/header.jsp"/>
-<section>
+    <jsp:include page="fragments/header.jsp"/>
+<div>
     <form method="post" action="resume" enctype="application/x-www-form-urlencoded">
         <input type="hidden" name="uuid" value="${resume.uuid}">
+        <h3><label for="fullName" id="fullName1">Full Name</label></h3>
+        <input type="text" id="fullName"
+               name="fullName" size=50 pattern="[А-Яа-яa-zA-Z0-9\s]{2,}"
+               placeholder="Send you Full Name"
+               value="${resume.fullName}" required>
+        <p>Contacts</p>
         <dl>
-            <dt>Name:</dt>
-            <dd><input type="text" name="fullName" size=50 value="${resume.fullName}" required></dd>
-        </dl>
-        <h3>Contacts:</h3>
         <c:forEach var="type" items="<%=ContactsType.values()%>">
-            <dl>
-                <dt>${type.title}</dt>
-                <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContacts(type)}"></dd>
-            </dl>
+            <dd><label for="contactType">
+                <input type="text" id="contactType"
+                       name="${type.name()}" size=30
+                       placeholder="${type.title}"
+                       value="${resume.getContacts(type)}"></label></dd>
+            <br/>
         </c:forEach>
-        <hr>
-        <h3>Section:</h3>
-        <c:forEach var="type" items="<%=SectionType.values()%>">
-            <dl>
+        </dl>
+        <p>Section</p>
+        <dl>
+            <c:forEach var="type" items="<%=SectionType.values()%>">
                 <c:choose>
                     <c:when test="${type == SectionType.OBJECTIVE || type == SectionType.PERSONAL}">
-                        <dt>${type.title}</dt>
-                        <dd><input type="text" size=130 name="${type.name()}" value="${resume.getSection(type)}"></dd>
+                        <dt><label for="${type}">${type.title}</label></dt>
+                        <dd><input type="text" id="${type}" name="${type.name()}" size="150"
+                                   value="${resume.getSection(type)}"></dd>
+                        <br/>
                     </c:when>
                     <c:when test="${type == SectionType.ACHIEVEMENT || type == SectionType.QUALIFICATION}">
-                        <dt>${type.title}</dt>
-                        <dd><textarea name="${type.name()}" rows="5" cols="100">${resume.getSection(type)}</textarea>
+                        <dt><label for="${type}">${type.title}</label></dt>
+                        <dd><textarea id="${type}"
+                                      name="${type.name()}" cols="150"
+                                      rows="8">${HtmlHelper.toHtmlSectionType(type, resume.getSection(type), true)}</textarea>
                         </dd>
-                    </c:when>
-                    <c:when test="${type == SectionType.EXPERIENCE || type == SectionType.EDUCATION}">
+                        <br/>
                     </c:when>
                 </c:choose>
-            </dl>
-        </c:forEach>
+            </c:forEach>
+        </dl>
         <button type="submit">Save</button>
-        <button type="reset" onclick="window.history.back()">Cancel</button>
+        <button type="reset">Cancel</button>
     </form>
-</section>
-<jsp:include page="fragments/footer.jsp"/>
+</div>
 </body>
 </html>
