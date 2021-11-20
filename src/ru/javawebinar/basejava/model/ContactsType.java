@@ -19,5 +19,4 @@ public enum ContactsType {
     public String getTitle() {
         return title;
     }
-
 }

@@ -11,7 +11,6 @@
 </head>
 <body>
 <jsp:include page="fragments/header.jsp"/>
-
 <section>
     <h2>${resume.fullName}&nbsp;<a href="resume?uuid=${resume.uuid}&action=edit"><img src="img/pencil.png"></a></h2>
     <p>
@@ -29,7 +28,8 @@
                          type="java.util.Map.Entry<ru.javawebinar.basejava.model.SectionType
                          , ru.javawebinar.basejava.model.AbstractSection>"/>
             <c:if test="<%=sectionEntry.getValue() != null%>">
-                <%=HtmlHelper.toHtmlSectionType(sectionEntry.getKey(), sectionEntry.getValue())%><br/>
+                <h3>${sectionEntry.key.title}</h3>
+                <%=HtmlHelper.toHtmlSectionType(sectionEntry.getKey(), sectionEntry.getValue(), false)%><br/>
             </c:if>
     </c:forEach>
     </p>

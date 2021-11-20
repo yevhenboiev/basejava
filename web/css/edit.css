@@ -1,0 +1,77 @@
+html {
+    position: relative;
+    width: 1200px;
+    height: 3610px;
+    background: #FFFFFF;
+}
+label {
+    position: absolute;
+    width: 206px;
+    height: 44px;
+    left: 295px;
+    top: 182px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 44px;
+    /* identical to box height */
+    display: flex;
+    align-items: center;
+
+    color: #4A586E;
+
+}
+
+header {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left: 295px;
+    top: 89px;
+}
+
+h3{
+    position: absolute;
+    width: 126px;
+    height: 44px;
+    left: 295px;
+    top: 182px;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 44px;
+    display: flex;
+    align-items: center;
+
+    color: #4A586E;
+}
+
+input {
+    position: absolute;
+    width: 610px;
+    height: 60px;
+    left: 295px;
+    top: 246px;
+    background: #F8F9FA;
+    box-shadow: inset 0px 0px 50px #E0E4EA;
+    border-radius: 10px;
+}
+
+::placeholder {
+    position: absolute;
+    width: 69px;
+    height: 19px;
+    left: 320px;
+    top: 267px;
+    font-family: Open Sans, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #ECEEF2;
+    opacity: 0.5;
+}

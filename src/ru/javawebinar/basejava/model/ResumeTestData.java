@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,29 +67,29 @@ public class ResumeTestData {
         ListSection qualificationSection = new ListSection(qualification);
         resume.setSection(SectionType.QUALIFICATION, qualificationSection);
 
-//        List<Organization> experienceOrganization = new ArrayList<>();
-//        Organization.Position positionWrike = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.parse("2011-10-01"),
-//                "Старший разработчик (backend)",
-//                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-//                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-//                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-//        Organization.Position positionWrike1 = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.parse("2011-10-01"), "Младший разработчик (backend)",
-//                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
-//                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-//                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-//        Organization wrike = new Organization("Wrike", "url", positionWrike, positionWrike1);
-//        experienceOrganization.add(wrike);
-//        OrganizationSection experience = new OrganizationSection(experienceOrganization);
-//        resume.setSection(SectionType.EXPERIENCE, experience);
-//
-//        List<Organization> educationOrganization = new ArrayList<>();
-//        Organization.Position positionCoursera = new Organization.Position(LocalDate.parse("2020-10-01"),
-//                LocalDate.parse("2020-11-01"),
-//                " \"Functional Programming Principles in Scala\" by Martin Odersky", null);
-//        Organization coursera = new Organization("Coursera", null, positionCoursera);
-//        educationOrganization.add(coursera);
-//        OrganizationSection education = new OrganizationSection(educationOrganization);
-//        resume.setSection(SectionType.EDUCATION, education);
+        List<Organization> experienceOrganization = new ArrayList<>();
+        Organization.Position positionWrike = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.parse("2011-10-01"),
+                "Старший разработчик (backend)",
+                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        Organization.Position positionWrike1 = new Organization.Position(LocalDate.parse("2010-10-01"), LocalDate.parse("2011-10-01"), "Младший разработчик (backend)",
+                "Проектирование и разработка онлайн платформы управления проектами Wrike " +
+                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
+        Organization wrike = new Organization("Wrike", "url", positionWrike, positionWrike1);
+        experienceOrganization.add(wrike);
+        OrganizationSection experience = new OrganizationSection(experienceOrganization);
+        resume.setSection(SectionType.EXPERIENCE, experience);
+
+        List<Organization> educationOrganization = new ArrayList<>();
+        Organization.Position positionCoursera = new Organization.Position(LocalDate.parse("2020-10-01"),
+                LocalDate.parse("2020-11-01"),
+                " \"Functional Programming Principles in Scala\" by Martin Odersky", null);
+        Organization coursera = new Organization("Coursera", null, positionCoursera);
+        educationOrganization.add(coursera);
+        OrganizationSection education = new OrganizationSection(educationOrganization);
+        resume.setSection(SectionType.EDUCATION, education);
 
         return resume;
     }
