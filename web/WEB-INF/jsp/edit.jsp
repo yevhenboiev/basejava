@@ -30,13 +30,17 @@
         <c:forEach var="type" items="<%=SectionType.values()%>">
             <dl>
                 <c:choose>
-                    <c:when test="${type != SectionType.EXPERIENCE || type != SectionType.EDUCATION}">
+                    <c:when test="${type == SectionType.OBJECTIVE || type == SectionType.PERSONAL}">
                         <dt>${type.title}</dt>
-                        <dd><input type="text" size=150 name="${type.name()}" value="${resume.getSection(type)}"></dd>
+                        <dd><input type="text" size=130 name="${type.name()}" value="${resume.getSection(type)}"></dd>
                     </c:when>
-                    <c:otherwise>
-                        //TODO Make OrganizationSection
-                    </c:otherwise>
+                    <c:when test="${type == SectionType.ACHIEVEMENT || type == SectionType.QUALIFICATION}">
+                        <dt>${type.title}</dt>
+                        <dd><textarea name="${type.name()}" rows="5" cols="100">${resume.getSection(type)}</textarea>
+                        </dd>
+                    </c:when>
+                    <c:when test="${type == SectionType.EXPERIENCE || type == SectionType.EDUCATION}">
+                    </c:when>
                 </c:choose>
             </dl>
         </c:forEach>
