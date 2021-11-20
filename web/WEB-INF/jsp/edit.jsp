@@ -17,7 +17,7 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h3><label for="fullName" id="fullName1">Full Name</label></h3>
         <input type="text" id="fullName"
-               name="fullName" size=50 pattern="[А-Яа-яa-zA-Z0-9\s]{2,}"
+               name="fullName" size=50 pattern="[А-Яа-яa-zA-Z\s]{2,}"
                placeholder="Send you Full Name"
                value="${resume.fullName}" required>
         <p>Contacts</p>
