@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ResumeServlet extends HttpServlet {
 
@@ -54,7 +57,6 @@ public class ResumeServlet extends HttpServlet {
         ).forward(request, response);
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -85,7 +87,8 @@ public class ResumeServlet extends HttpServlet {
 
     private void saveSection(HttpServletRequest request, Resume resume) {
         for (SectionType type : SectionType.values()) {
-            String value = request.getParameter(type.name());
+            String value = request.getParameter(type.name()) == null ?
+                    request.getParameter(type.name() + "orgName") : request.getParameter(type.name());
             if (value != null && value.trim().length() != 0) {
                 switch (type) {
                     case OBJECTIVE:
@@ -96,6 +99,10 @@ public class ResumeServlet extends HttpServlet {
                     case QUALIFICATION:
                         resume.setSection(type, new ListSection(Arrays.asList(value.split("\n"))));
                         break;
+                    case EDUCATION:
+                    case EXPERIENCE:
+                        OrganizationSection organizationSection = setOrganizationSection(request, type);
+                        resume.setSection(type, organizationSection);
                 }
             } else {
                 resume.getSection().remove(type);
@@ -103,5 +110,28 @@ public class ResumeServlet extends HttpServlet {
         }
     }
 
+    private OrganizationSection setOrganizationSection(HttpServletRequest request, SectionType type) {
+        List<Organization> organizationList = new ArrayList<>();
+        String[] orgName = request.getParameterValues(type.name() + "orgName");
+        for(int i = 0; i < orgName.length; i++) {
+            List<Organization.Position> positionList = new ArrayList<>();
+            String[] startDate = request.getParameterValues(type.name() + i + "startDate");
+            String[] endDate = request.getParameterValues(type.name() + i + "endDate");
+            String[] title = request.getParameterValues(type.name() + i + "position");
+            String[] description = request.getParameterValues(type.name() + i + "description");
+            for(int k = 0; k < title.length; k ++) {
+                Organization.Position position = new Organization.Position(
+                        checkDate(startDate[k]), checkDate(endDate[k]),
+                        title[k], description[k]);
+                positionList.add(position);
+            }
+            Organization organization = new Organization(new Link(orgName[i], null), positionList);
+            organizationList.add(organization);
+        }
+        return new OrganizationSection(organizationList);
+    }
 
+    private static LocalDate checkDate(String line) {
+        return line.isEmpty() ? null : LocalDate.parse(line);
+    }
 }

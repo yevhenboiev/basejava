@@ -108,4 +108,8 @@ public class HtmlHelper {
     public static String toLink(String href, String title) {
         return "<a href='" + href + "'>" + title + "</a>";
     }
+
+    public static String deleteDoubleQuotes(String title) {
+        return String.join("\"", title);
+    }
 }
