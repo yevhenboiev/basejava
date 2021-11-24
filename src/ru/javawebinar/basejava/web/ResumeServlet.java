@@ -99,10 +99,10 @@ public class ResumeServlet extends HttpServlet {
                     case QUALIFICATION:
                         resume.setSection(type, new ListSection(Arrays.asList(value.split("\n"))));
                         break;
-                    case EDUCATION:
                     case EXPERIENCE:
                         OrganizationSection organizationSection = setOrganizationSection(request, type);
                         resume.setSection(type, organizationSection);
+                        break;
                 }
             } else {
                 resume.getSection().remove(type);
@@ -112,26 +112,35 @@ public class ResumeServlet extends HttpServlet {
 
     private OrganizationSection setOrganizationSection(HttpServletRequest request, SectionType type) {
         List<Organization> organizationList = new ArrayList<>();
-        String[] orgName = request.getParameterValues(type.name() + "orgName");
-        for(int i = 0; i < orgName.length; i++) {
-            List<Organization.Position> positionList = new ArrayList<>();
-            String[] startDate = request.getParameterValues(type.name() + i + "startDate");
-            String[] endDate = request.getParameterValues(type.name() + i + "endDate");
-            String[] title = request.getParameterValues(type.name() + i + "position");
-            String[] description = request.getParameterValues(type.name() + i + "description");
-            for(int k = 0; k < title.length; k ++) {
-                Organization.Position position = new Organization.Position(
-                        checkDate(startDate[k]), checkDate(endDate[k]),
-                        title[k], description[k]);
-                positionList.add(position);
+        String[] nameOrganization = request.getParameterValues(type.name() + "orgName");
+        for (int i = 0; i < nameOrganization.length; i++) {
+            if (isPresent(nameOrganization[i])) {
+                List<Organization.Position> positionList = setPosition(
+                        request.getParameterValues(type.name() + i + "startDate")
+                        , request.getParameterValues(type.name() + i + "endDate")
+                        , request.getParameterValues(type.name() + i + "position")
+                        , request.getParameterValues(type.name() + i + "description"));
+                organizationList.add(new Organization(new Link(nameOrganization[i], null), positionList));
             }
-            Organization organization = new Organization(new Link(orgName[i], null), positionList);
-            organizationList.add(organization);
         }
-        return new OrganizationSection(organizationList);
+        return organizationList.size() == 0 ? null : new OrganizationSection(organizationList);
+    }
+
+    private static List<Organization.Position> setPosition(String[] startDate, String[] endDate, String[] title, String[] description) {
+        List<Organization.Position> positionList = new ArrayList<>();
+        for (int i = 0; i < title.length; i++) {
+            if (isPresent(startDate[i]) && isPresent(title[i])) {
+                positionList.add(new Organization.Position(checkDate(startDate[i]), checkDate(endDate[i]), title[i], description[i]));
+            }
+        }
+        return positionList.isEmpty() ? null : positionList;
     }
 
     private static LocalDate checkDate(String line) {
         return line.isEmpty() ? null : LocalDate.parse(line);
+    }
+
+    private static boolean isPresent(String line) {
+        return line != null && !line.isEmpty();
     }
 }

@@ -38,7 +38,6 @@
         <c:forEach var="type" items="<%=SectionType.values()%>">
             <c:choose>
                 <c:when test="${type == SectionType.OBJECTIVE || type == SectionType.PERSONAL}">
-                    <c:set var="orgCounter" value="${0}"/>
                     <h3>${type.title}</h3>
                     <p><label><input type="text" name="${type.name()}" size="150"
                                      value="${resume.getSection(type)}">
@@ -53,6 +52,7 @@
                 </c:when>
                 <c:when test="${type == SectionType.EDUCATION || type == SectionType.EXPERIENCE}">
                     <h3>${type.title}</h3>
+                    <c:set var="type.name()" value="${type.name()}"/>
                     <c:set var="orgCounter" value="${0}"/>
                     <c:forEach var="organization" items="${resume.getSection(type).organizations}">
                         <p><label>Name of an organization:<input type="text"
@@ -93,9 +93,9 @@
                     <p><label>Name of an organization:<input type="text" name="${type.name()}orgName" size="150">
                     </label></p>
                     <p><label>Start date:
-                        <input type="date" name="${type.name()}${orgCounter}startData"></label>
+                        <input type="date" name="${type.name()}${orgCounter}startDate"></label>
                         <label>End date:
-                            <input type="date" name="${type.name()}${orgCounter}endData"></label></p>
+                            <input type="date" name="${type.name()}${orgCounter}endDate"></label></p>
                     <p><label>Name of an Position: <textarea name="${type.name()}${orgCounter}position" cols="150"
                                                              rows="1"></textarea></label></p>
                     <c:if test="${type != SectionType.EDUCATION}">
