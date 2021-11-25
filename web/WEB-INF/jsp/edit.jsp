@@ -46,9 +46,7 @@
                 </c:when>
                 <c:when test="${type == SectionType.ACHIEVEMENT || type == SectionType.QUALIFICATION}">
                     <h3>${type.title}</h3>
-                    <p><textarea name="${type.name()}" cols="150" rows="8">
-                            ${HtmlHelper.toHtmlSectionType(type, resume.getSection(type), true)}</textarea></p>
-                    <br/>
+                    <p><textarea name="${type.name()}" cols="150" rows="8">${HtmlHelper.toHtmlSectionType(type, resume.getSection(type), true)}</textarea></p>
                 </c:when>
                 <c:when test="${type == SectionType.EDUCATION || type == SectionType.EXPERIENCE}">
                     <h3>${type.title}</h3>

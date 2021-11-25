@@ -97,7 +97,7 @@ public class ResumeServlet extends HttpServlet {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATION:
-                        resume.setSection(type, new ListSection(Arrays.asList(value.split("\n"))));
+                        resume.setSection(type, new ListSection(Arrays.asList(value.replaceAll("</br>", "").split("\\r\\n\\s*"))));
                         break;
                     case EXPERIENCE:
                         OrganizationSection organizationSection = setOrganizationSection(request, type);

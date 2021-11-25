@@ -58,9 +58,7 @@ public class HtmlHelper {
         StringBuilder sb = new StringBuilder();
         sb.append("<ul>");
         for (String line : list.getContentList()) {
-            if (!line.equals("\r")) {
                 sb.append("<li>").append(line).append("</li>");
-            }
         }
         sb.append("</ul>");
         return sb.toString();
