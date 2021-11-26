@@ -22,7 +22,6 @@ public class Resume implements Comparable<Resume>, Serializable {
     private Map<SectionType, AbstractSection> section = new EnumMap<>(SectionType.class);
 
     public Resume() {
-        this.uuid = UUID.randomUUID().toString();
     }
 
     public Resume(String fullName) {

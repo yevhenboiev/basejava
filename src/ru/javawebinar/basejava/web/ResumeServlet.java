@@ -38,7 +38,6 @@ public class ResumeServlet extends HttpServlet {
         switch (action) {
             case "save":
                 resume = new Resume();
-                storage.save(resume);
                 break;
             case "delete":
                 storage.delete(uuid);
@@ -62,7 +61,7 @@ public class ResumeServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String uuid = request.getParameter("uuid");
         String fullName = request.getParameter("fullName");
-        Resume resume = storage.get(uuid);
+        Resume resume = uuid.equals("") ? new Resume(fullName) : storage.get(uuid);
         saveContact(request, resume);
         saveSection(request, resume);
         if (fullName.equals("")) {
@@ -70,7 +69,11 @@ public class ResumeServlet extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/jsp/edit.jsp").forward(request, response);
         }
         resume.setFullName(fullName);
-        storage.update(resume);
+        if (uuid.equals("")) {
+            storage.save(resume);
+        } else {
+            storage.update(resume);
+        }
         response.sendRedirect("resume");
     }
 
