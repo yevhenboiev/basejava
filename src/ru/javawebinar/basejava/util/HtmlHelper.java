@@ -25,14 +25,14 @@ public class HtmlHelper {
             case HOME_PHONE:
                 return type.getTitle() + " : " + value;
             case SKYPE:
-                return toLink("skype: " + value, type.getTitle());
+                return toLink("skype: " + value, type.getTitle()) + " : " + value;
             case MAIL:
-                return toLink("mailto: " + value, type.getTitle());
+                return toLink("mailto: " + value, type.getTitle()) + " : " + value;
             case LINKEDIN:
             case GIT_HUB:
             case STACKOVERFLOW:
             case HOME_PAGE:
-                return toLink(value, type.getTitle());
+                return toLink(value, type.getTitle()) + " : " + value;
         }
         return null;
     }
