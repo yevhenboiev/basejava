@@ -1,0 +1,99 @@
+
+
+.create-resume img {
+    margin-top: 45px;
+    margin-left: 70%;
+    margin-right: 10px;
+}
+
+.create-resume a {
+    position: absolute;
+    text-decoration: none;
+
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+
+    margin-top: 45px;
+
+    color: #4a586e;
+}
+
+.table-resumes table {
+    table-layout: fixed;
+    width: 50%;
+
+    margin-top: 30px;
+    margin-left: 27%;
+    border-collapse: collapse;
+}
+
+.table-resumes thead {
+    background: #e0e4ea;
+}
+
+.table-resumes thead th {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+
+    padding: 25px;
+
+    color: #4a586e;
+}
+
+a {
+    text-decoration: none;
+
+    font-family: Open Sans, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+}
+
+.table-resumes tbody td {
+
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+
+    font-family: Open Sans, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+}
+
+
+.table-resumes thead th:nth-child(1) {
+    width: 30%;
+}
+
+.table-resumes thead th:nth-child(2) {
+    width: 30%;
+}
+
+.table-resumes thead th:nth-child(3) {
+    width: 20%;
+}
+
+.table-resumes thead th:nth-child(4) {
+    width: 20%;
+}
+
+.table-resumes tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+.table-resumes tbody tr:nth-child(even) {
+    background-color: #eceef2;
+}

@@ -1,77 +1,95 @@
-html {
-    position: relative;
-    width: 1200px;
-    height: 3610px;
-    background: #FFFFFF;
-}
-label {
-    position: absolute;
-    width: 206px;
-    height: 44px;
-    left: 295px;
-    top: 182px;
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 44px;
-    /* identical to box height */
-    display: flex;
-    align-items: center;
-
-    color: #4A586E;
-
-}
-
-header {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    left: 295px;
-    top: 89px;
-}
-
-h3{
-    position: absolute;
-    width: 126px;
-    height: 44px;
-    left: 295px;
-    top: 182px;
-    font-family: Open Sans, serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 44px;
-    display: flex;
-    align-items: center;
-
-    color: #4A586E;
-}
-
 input {
-    position: absolute;
-    width: 610px;
+    padding-left: 25px;
+    outline: 0;
     height: 60px;
-    left: 295px;
-    top: 246px;
-    background: #F8F9FA;
-    box-shadow: inset 0px 0px 50px #E0E4EA;
-    border-radius: 10px;
-}
+    width: 50%;
 
-::placeholder {
-    position: absolute;
-    width: 69px;
-    height: 19px;
-    left: 320px;
-    top: 267px;
-    font-family: Open Sans, serif;
+    background: #f8f9fa;
+
+    margin-bottom: 20px;
+
+    border: 0px;
+    box-shadow: inset 0px 0px 50px #e0e4ea;
+    border-radius: 10px;
+
+    font-family: Open Sans;
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
     line-height: 19px;
-    display: flex;
-    align-items: center;
-    color: #ECEEF2;
+
+    color: #4a586e;
+}
+
+input::placeholder {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+
     opacity: 0.5;
+}
+
+h3 {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 44px;
+
+    margin-bottom: 20px;
+
+    color: #4a586e;
+}
+
+h4 {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 33px;
+
+    color: #4a586e;
+}
+
+textarea {
+    padding-left: 25px;
+    padding-right: 25px;
+    outline: 0;
+    height: 60px;
+    width: 50%;
+
+    background: #f8f9fa;
+    box-shadow: inset 0px 0px 50px #e0e4ea;
+    border-radius: 10px;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+}
+
+.full_name {
+    padding-top: 40px;
+    padding-left: 27%;
+}
+
+.contact_section {
+    padding-top: 20px;
+    padding-left: 27%;
+}
+
+.section_type {
+    padding-top: 20px;
+    padding-left: 27%;
+}
+
+.personal {
+    padding-top: 20px;
 }

@@ -1,0 +1,22 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    border-radius: 20px;
+
+    background-color: #edeff2;
+}
+
+footer h3 {
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    position: absolute;
+    padding-top: 30px;
+    padding-left: 42%;
+    color: #4a586e;
+}

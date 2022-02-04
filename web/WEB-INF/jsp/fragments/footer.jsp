@@ -1,4 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <footer>
-    Base Resume
+    <h3>Проект: разработка web-приложения «База данных резюме»</h3>
 </footer>

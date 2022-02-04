@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+}
+
+header {
+    height: 150px;
+
+    border-radius: 20px;
+    background-color: #edeff2;
+}
+
+header img {
+    margin-top: 60px;
+    margin-left: 27%;
+    margin-right: 15px;
+}
+
+header span {
+    position: absolute;
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 27px;
+
+    margin-top: 62px;
+
+    color: #4a586e;
+}
