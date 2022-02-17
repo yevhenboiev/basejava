@@ -7,10 +7,6 @@ import java.util.List;
 
 public class HtmlHelper {
 
-    public static final String OPEN_TR = "<tr>";
-    public static final String CLOSE_TR = "</tr>";
-    public static final String OPEN_TD = "<td>";
-    public static final String CLOSE_TD = "</td>";
     public static final String OPEN_H3 = "<h3>";
     public static final String CLOSE_H3 = "</h3>";
     public static final String OPEN_B = "<b>";
@@ -25,14 +21,14 @@ public class HtmlHelper {
             case HOME_PHONE:
                 return type.getTitle() + " : " + value;
             case SKYPE:
-                return toLink("skype: " + value, type.getTitle()) + " : " + value;
+                return type.getTitle() + " : " +  toLink("skype: " + value, value);
             case MAIL:
-                return toLink("mailto: " + value, type.getTitle()) + " : " + value;
+                return type.getTitle() + " : " + toLink("mailto: " + value, value);
             case LINKEDIN:
             case GIT_HUB:
             case STACKOVERFLOW:
             case HOME_PAGE:
-                return toLink(value, type.getTitle()) + " : " + value;
+                return toLink(value, type.getTitle());
         }
         return null;
     }
@@ -42,7 +38,7 @@ public class HtmlHelper {
             switch (type) {
                 case OBJECTIVE:
                 case PERSONAL:
-                    return ((TextSection) value).getContent();
+                    return edit ? ((TextSection) value).getContent() : "<p>" + ((TextSection) value).getContent() + "</p>";
                 case ACHIEVEMENT:
                 case QUALIFICATION:
                     return edit ? getListToEdit((ListSection) value) : getListToView((ListSection) value);
@@ -58,7 +54,7 @@ public class HtmlHelper {
         StringBuilder sb = new StringBuilder();
         sb.append("<ul>");
         for (String line : list.getContentList()) {
-                sb.append("<li>").append(line).append("</li>");
+            sb.append("<li>").append(line).append("</li>");
         }
         sb.append("</ul>");
         return sb.toString();
@@ -71,35 +67,37 @@ public class HtmlHelper {
     private static String getOrganization(OrganizationSection value) {
         List<Organization> organizationList = value.getOrganizations();
         StringBuilder sb = new StringBuilder();
-        sb.append("<table>");
         organizationList.forEach(organization -> {
-                sb.append(OPEN_TR).append(OPEN_TD).append(OPEN_H3)
-                        .append(toLink(organization.getHomePage().getUrl(), organization.getHomePage().getName()))
-                        .append(CLOSE_H3)
-                        .append(CLOSE_TD)
-                        .append(CLOSE_TR);
-        organization.getPositions().forEach(position -> sb.append(getPosition(position)));
-                        sb.append("<table>");
-    });
+            sb.append("<div class=\"education\">")
+                    .append(OPEN_H3)
+                    .append(toLink(organization.getHomePage().getUrl(), organization.getHomePage().getName()))
+                    .append(CLOSE_H3);
+            organization.getPositions().forEach(position -> sb.append(getPosition(position)));
+            sb.append("</div>");
+        });
         return sb.toString();
-}
+    }
 
     public static String getPosition(Organization.Position position) {
         StringBuilder sb = new StringBuilder();
         LocalDate startDate = position.getStartDate();
         LocalDate endDate = position.getEndDate();
-        sb.append(OPEN_TR).append(OPEN_TD)
+        sb.append("<div class=\"date_and_title\">")
+                .append("<div class=\"time\">")
+                .append("<h4>")
                 .append(startDate.getMonthValue()).append("/").append(startDate.getYear())
                 .append(" - ")
                 .append(endDate.getYear() == 3000 ? "Now" : endDate.getMonthValue() + "/" + endDate.getYear())
-                .append(CLOSE_TD)
-                .append(OPEN_TD)
+                .append("</h4>")
+                .append("</div>")
+                .append("<div class = title_and_description>")
                 .append(OPEN_B)
                 .append(position.getTitle())
                 .append(CLOSE_B)
                 .append(BR)
+                .append("<p>")
                 .append(position.getDescription())
-                .append(CLOSE_TD).append(CLOSE_TR);
+                .append("</p>").append("</div>").append("</div>");
         return sb.toString();
     }
 

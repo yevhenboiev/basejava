@@ -28,94 +28,107 @@
         <div class="full_name">
             <input type="hidden" name="uuid" value="${resume.uuid}">
             <h3><label for="fullName" id="fullName1">Full Name</label></h3>
-            <input type="text" id="fullName" name="fullName" size=50 pattern="[А-Яа-яa-zA-Z\s]{2,}" placeholder="Send you Full Name"
+            <input type="text" id="fullName" name="fullName" size=50 pattern="[А-Яа-яa-zA-Z\s]{2,}"
+                   placeholder="Send you Full Name"
                    value="${resume.fullName}" required>
         </div>
 
         <div class="contact_section">
             <h3>Contacts</h3>
             <c:forEach var="type" items="<%=ContactsType.values()%>">
-            <input type="text" id="contactType" name="${type.name()}" size=30 placeholder="${type.title}"
-                   value="${resume.getContacts(type)}">
+                <input type="text" id="contactType" name="${type.name()}" size=30 placeholder="${type.title}"
+                       value="${resume.getContacts(type)}">
             </c:forEach>
         </div>
 
         <!--Section Type-->
         <div class="section_type">
-            <h3>Section</h3>
-            <c:forEach var="type" items="<%=SectionType.values()%>">
-                <c:choose>
-                    <c:when test="${type != SectionType.EDUCATION || type != SectionType.EXPERIENCE}">
+            <h3>Section</h3><c:forEach var="type" items="<%=SectionType.values()%>"><c:choose><c:when
+                test="${type != SectionType.EDUCATION && type != SectionType.EXPERIENCE}">
             <!--PERSONAL OBJECTIVE ACHIEVEMENT QUALIFICATION-->
             <div class="personal">
                 <h4>${type.title}</h4>
-                <textarea name="${type.name()}">
-                    ${HtmlHelper.toHtmlSectionType(type, resume.getSection(type), true)}
-                </textarea>
+                <textarea
+                        name="${type.name()}">${HtmlHelper.toHtmlSectionType(type, resume.getSection(type), true)}</textarea>
             </div>
-                    </c:when>
-<%--            <!--EDUCATION and EXPERIENCE-->--%>
-<%--                <c:when test="${type == SectionType.EDUCATION || type == SectionType.EXPERIENCE}">--%>
-<%--            <div class="education">--%>
-<%--                    <h4>${type.title}</h4>--%>
-<%--                    <c:set var="type.name()" value="${type.name()}"/>--%>
-<%--                    <c:set var="orgCounter" value="${0}"/>--%>
-<%--                    <c:forEach var="organization" items="${resume.getSection(type).organizations}">--%>
-<%--                        <p><label>Name of an organization:<input type="text"--%>
-<%--                                                                 name="${type.name()}orgName" size="150"--%>
-<%--                                                                 value="${organization.homePage.name}"></label></p>--%>
-<%--                            <c:forEach var="position" items="${organization.positions}">--%>
-<%--                                <p><label>Start date:--%>
-<%--                                    <input type="date" name="${type.name()}${orgCounter}startDate"--%>
-<%--                                           value="${position.startDate}"></label></p>--%>
-<%--                                <p><label>End date:--%>
-<%--                                    <input type="date" name="${type.name()}${orgCounter}endDate"--%>
-<%--                                           value="${position.endDate}"></label></p>--%>
-<%--                                <p><label>Name of an Position: <textarea name="${type.name()}${orgCounter}position"--%>
-<%--                                                                         cols="150"--%>
-<%--                                                                         rows="1">${position.title}</textarea></label></p>--%>
-<%--                                <c:if test="${type != SectionType.EDUCATION}">--%>
-<%--                                    <p><label>Description of an Position:--%>
-<%--                                        <textarea name="${type.name()}${orgCounter}description" cols="150"--%>
-<%--                                                  rows="8">${position.description}</textarea></label></p>--%>
-<%--                                </c:if>--%>
-<%--                            </c:forEach>--%>
-<%--                            <h3>Add a new Position:</h3>--%>
-<%--                            <p><label>Start date</label></p>--%>
-<%--                            <input type="date" name="${type.name()}${orgCounter}startDate">--%>
-<%--                            <p><label>End date</label></p>--%>
-<%--                            <input type="date" name="${type.name()}${orgCounter}endDate">--%>
-<%--                            <p><label>Name of an Position:--%>
-<%--                                <textarea name="${type.name()}${orgCounter}position" cols="150" rows="1"></textarea>--%>
-<%--                            </label></p>--%>
-<%--                            <c:if test="${type != SectionType.EDUCATION}">--%>
-<%--                                <p><label> Description of an Position:--%>
-<%--                                    <textarea name="${type.name()}${orgCounter}description" cols="150" rows="8"></textarea>--%>
-<%--                                </label></p>--%>
-<%--                            </c:if>--%>
-<%--                            <c:set var="orgCounter" value="${orgCounter + 1}"/>--%>
-<%--                        </c:forEach>--%>
-<%--                        <h3>Add a new Organization</h3>--%>
-<%--                        <p><label>Name of an organization:<input type="text" name="${type.name()}orgName" size="150">--%>
-<%--                        </label></p>--%>
-<%--                        <p><label>Start date:--%>
-<%--                            <input type="date" name="${type.name()}${orgCounter}startDate"></label>--%>
-<%--                            <label>End date:--%>
-<%--                                <input type="date" name="${type.name()}${orgCounter}endDate"></label></p>--%>
-<%--                        <p><label>Name of an Position: <textarea name="${type.name()}${orgCounter}position" cols="150"--%>
-<%--                                                                 rows="1"></textarea></label></p>--%>
-<%--                        <c:if test="${type != SectionType.EDUCATION}">--%>
-<%--                            <p><label>Description of an Position:--%>
-<%--                                <textarea name="${type.name()}${orgCounter}description" cols="150"--%>
-<%--                                          rows="8"></textarea></label></p>--%>
-<%--                        </c:if>--%>
-<%--                    </div>--%>
-<%--                </c:when>--%>
-                </c:choose>
-            </c:forEach>
+        </c:when><c:when test="${type == SectionType.EDUCATION || type == SectionType.EXPERIENCE}">
+            <!--EDUCATION and EXPERIENCE-->
+            <div class="education">
+                <h4>${type.title}</h4>
+                <c:set var="type.name()" value="${type.name()}"/>
+                <c:set var="orgCounter" value="${0}"/>
+                <c:forEach var="organization" items="${resume.getSection(type).organizations}">
+                    <input type="text" name="${type.name()}orgName" size="150"
+                           placeholder="Name" value="${organization.homePage.name}">
+                    <input type="text" name="${type.name()}link" size="150"
+                           placeholder="Link" value="${organization.homePage.url}">
+                    <c:forEach var="position" items="${organization.positions}">
+                        <div class="date_section">
+                            <input placeholder="Start date: MM YYYY" class="textbox-n" type="text"
+                                   onfocus="(this.type='date')"
+                                   onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                                   name="${type.name()}${orgCounter}startDate"
+                                   value="${position.startDate}">
+                            <input placeholder="End date: MM YYYY" class="textbox-n" type="text"
+                                   onfocus="(this.type='date')"
+                                   onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                                   name="${type.name()}${orgCounter}endDate" value="${position.endDate}">
+                        </div>
+                        <input type="text" name="${type.name()}${orgCounter}position" cols="150"
+                               placeholder="Title" value="${position.title}">
+                        <c:if test="${type != SectionType.EDUCATION}">
+                                        <textarea placeholder="Description"
+                                                  name="${type.name()}${orgCounter}description">${position.description}</textarea>
+                        </c:if>
+                    </c:forEach>
+                    <button class="add_new_organization" type="button">Добавить позицию</button>
+                    <div class="date_section">
+                        <input placeholder="Start date: MM YYYY" class="textbox-n" type="text"
+                               onfocus="(this.type='date')"
+                               onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                               name="${type.name()}${orgCounter}startDate">
+                        <input placeholder="End date: MM YYYY" class="textbox-n" type="text"
+                               onfocus="(this.type='date')"
+                               onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                               name="${type.name()}${orgCounter}endDate">
+                    </div>
+                    <input type="text" name="${type.name()}${orgCounter}position" cols="150"
+                           placeholder="Title">
+                    <c:if test="${type != SectionType.EDUCATION}">
+                                <textarea placeholder="Description"
+                                          name="${type.name()}${orgCounter}description"></textarea>
+                    </c:if>
+                    <c:set var="orgCounter" value="${orgCounter + 1}"/>
+                </c:forEach>
+                <button class="add_new_organization" type="button">Добавить</button>
+                <input type="text" name="${type.name()}orgName" size="150" placeholder="Name">
+                <input type="text" name="${type.name()}link" size="150" placeholder="Link">
+                <button class="add_new_organization" type="button">Добавить позицию</button>
+                <div class="date_section">
+                    <input placeholder="Start date: MM YYYY" class="textbox-n" type="text"
+                           onfocus="(this.type='date')"
+                           onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                           name="${type.name()}${orgCounter}startDate">
+                    <input placeholder="End date: MM YYYY" class="textbox-n" type="text"
+                           onfocus="(this.type='date')"
+                           onblur="(this.value == '' ? this.type='text' : this.type='date')"
+                           name="${type.name()}${orgCounter}endDate">
+                </div>
+                <input type="text" name="${type.name()}${orgCounter}position" cols="150"
+                       placeholder="Title">
+                <c:if test="${type != SectionType.EDUCATION}">
+                                <textarea placeholder="Description"
+                                          name="${type.name()}${orgCounter}description"></textarea>
+                </c:if>
+            </div>
+        </c:when>
+        </c:choose>
+        </c:forEach>
         </div>
-        <button type="submit">Save</button>
-        <button type="reset">Cancel</button>
+        <div class="button">
+            <button class="button_cancel" type="reset">Cancel</button>
+            <button class="button_save" type="submit">Save</button>
+        </div>
     </form>
 </div>
 </body>

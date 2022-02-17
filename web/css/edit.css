@@ -46,6 +46,8 @@ h3 {
 }
 
 h4 {
+    margin-top: 10px;
+    margin-bottom: 10px;
     font-family: Open Sans;
     font-style: normal;
     font-weight: 600;
@@ -58,10 +60,11 @@ h4 {
 textarea {
     padding-left: 25px;
     padding-right: 25px;
-    outline: 0;
+    outline: none;
     height: 60px;
     width: 50%;
 
+    border: 0px;
     background: #f8f9fa;
     box-shadow: inset 0px 0px 50px #e0e4ea;
     border-radius: 10px;
@@ -75,6 +78,18 @@ textarea {
     color: #4a586e;
 }
 
+textarea::placeholder {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+
+    opacity: 0.5;
+}
+
 .full_name {
     padding-top: 40px;
     padding-left: 27%;
@@ -86,10 +101,91 @@ textarea {
 }
 
 .section_type {
-    padding-top: 20px;
+    padding-top: 10px;
     padding-left: 27%;
 }
 
-.personal {
-    padding-top: 20px;
+.date_section {
+    display: flex;
+    margin-top: 20px;
+}
+
+.date_section input {
+    padding-left: 25px;
+    margin-right: 10%;
+    outline: 0;
+    height: 60px;
+    width: 20%;
+
+    background: #f8f9fa;
+
+    margin-bottom: 20px;
+
+    border: 0px;
+    box-shadow: inset 0px 0px 50px #e0e4ea;
+    border-radius: 10px;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 19px;
+
+    color: #4a586e;
+}
+
+.add_new_organization {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 60px;
+    width: 20%;
+    border: 2px solid #319848;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: none;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #319848;
+}
+
+.button {
+    display: flex;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 27%;
+}
+
+button {
+    border-radius: 10px;
+
+    width: 20%;
+    height: 60px;
+    margin-right: 10%;
+
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #f8f9fa;
+}
+
+.button_cancel {
+    background: #b7616a;
+}
+.button_save {
+    background: #319848;
 }

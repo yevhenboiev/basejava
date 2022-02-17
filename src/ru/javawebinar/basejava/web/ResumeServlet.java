@@ -116,6 +116,7 @@ public class ResumeServlet extends HttpServlet {
     private OrganizationSection setOrganizationSection(HttpServletRequest request, SectionType type) {
         List<Organization> organizationList = new ArrayList<>();
         String[] nameOrganization = request.getParameterValues(type.name() + "orgName");
+        String[] linkOrganization = request.getParameterValues(type.name() + "link");
         for (int i = 0; i < nameOrganization.length; i++) {
             if (isPresent(nameOrganization[i])) {
                 List<Organization.Position> positionList = setPosition(
@@ -123,7 +124,7 @@ public class ResumeServlet extends HttpServlet {
                         , request.getParameterValues(type.name() + i + "endDate")
                         , request.getParameterValues(type.name() + i + "position")
                         , request.getParameterValues(type.name() + i + "description"));
-                organizationList.add(new Organization(new Link(nameOrganization[i], null), positionList));
+                organizationList.add(new Organization(new Link(nameOrganization[i], linkOrganization[i]), positionList));
             }
         }
         return organizationList.size() == 0 ? null : new OrganizationSection(organizationList);
