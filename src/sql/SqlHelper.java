@@ -20,6 +20,7 @@ public class SqlHelper {
     public <T> T execute(String sql, SqlExecutor<T> sqlExecutor) {
         try (Connection conn = connectionFactory.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+            System.out.println("Rebase");
             return sqlExecutor.execute(ps);
         } catch (SQLException e) {
             throw ExceptionConvert.convert(e);
